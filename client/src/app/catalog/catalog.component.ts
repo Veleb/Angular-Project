@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../services/product.service';
+import { Product } from '../types';
 
 @Component({
   selector: 'app-catalog',
@@ -7,9 +9,23 @@ import { Component } from '@angular/core';
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })
-export class CatalogComponent {
+export class CatalogComponent implements OnInit {
+  products: Product[] = [];
 
+  constructor(private productService: ProductService) {}
+  
   selectedCategories: String[] = [];
+
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (error) => {
+        console.error(`Error fetching products: ${error}`)
+      }
+    })
+  }
 
   categories = [
     'Electronics',
@@ -24,7 +40,7 @@ export class CatalogComponent {
     'Music & Movies'
   ];
 
-  // add logic if selectedCategories iz empty to be all categoriez
+  // add logic if selectedCategories iz empty to be all categories
 
   onCategoryChange(event: Event): void {
     const target = event.target as HTMLInputElement; 
