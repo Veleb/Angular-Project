@@ -1,0 +1,29 @@
+.navbar-wrapper {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #57737a;
+}
+
+.nav-link {
+  font-size: 24px;
+  margin: 5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: white;
+  /* font-family: 'Courier New', Courier, monospace; */
+}
+
+.nav-link:hover {
+  cursor: pointer;
+}
+
+.nav-auth-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
