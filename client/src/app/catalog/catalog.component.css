@@ -1,0 +1,44 @@
+.catalog-wrapper {
+  background-color: red;
+  width: 100%;
+  min-height: min-content;
+  display: flex;
+}
+
+.sidebar {
+  width: 15%;
+  min-height: 100vh;
+  background-color: blue;
+}
+
+.product-section {
+  width: 85%;
+  min-height: 100vh;
+  background-color: purple;
+}
+
+/* FILTERING */
+
+.product-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 5px 0 0 10px;
+}
+
+.filter {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-label {
+  color: white;
+}
+
+.filter-input:hover {
+  cursor: pointer;
+}
+
+.filter-label:hover {
+  cursor: pointer;
+}

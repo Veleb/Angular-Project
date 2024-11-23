@@ -1,0 +1,23 @@
+<div class="catalog-wrapper">
+  <div class="sidebar">
+    <div class="product-filters">
+      @for (category of categories; track $index) {
+        <div class="filter">
+          <input 
+            [id]= "category"
+            class="filter-input"
+            type="checkbox" 
+            [value]="category" 
+            (change)="onCategoryChange($event)" 
+            />
+          <label [htmlFor]="category"  class="filter-label">{{ category }}</label>
+        </div> 
+      }
+    </div>
+  </div>
+
+  <div class="product-section">
+    <!-- insert product card component with a for loop after getting the items through the service. -->
+  </div>
+
+</div>

@@ -21,9 +21,25 @@ const productSchema = new Schema({
     type: String,
     minLength: 10,
   },
+  category: {
+    type: String,
+    enum: [
+      'Electronics',
+      'Fashion',
+      'Home & Living',
+      'Books',
+      'Toys',
+      'Sports & Outdoors',
+      'Health & Beauty',
+      'Automotive',
+      'Groceries',
+      'Music & Movies'
+    ],
+  },
   _ownerId: {
      type: mongoose.Types.ObjectId, ref: "User" ,
   },
+  timestamps: true,
 }) 
 
 const Product = model('Product', productSchema);
