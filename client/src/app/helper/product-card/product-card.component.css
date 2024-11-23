@@ -1,0 +1,17 @@
+.product-card-wrapper {
+  height: 225px;
+  min-width: 200px;
+  border-radius: 12px;
+  background-color: #c3c3c3;
+  border-color: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  overflow: hidden; 
+}
+
+.product-card-wrapper img {
+  max-height: 100%;  
+  width: 100%;
+  object-fit: cover;  
+}

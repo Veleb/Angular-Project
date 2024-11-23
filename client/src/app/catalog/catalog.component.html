@@ -17,7 +17,14 @@
   </div>
 
   <div class="product-section">
-    <!-- insert product card component with a for loop after getting the items through the service. -->
+    @if (filteredProducts.length !== 0) {
+      @for (product of filteredProducts; track $index) {
+        <app-product-card [product]="product"></app-product-card>
+      }
+    } @else {
+      <h1>No items found!</h1>
+    }
+      
   </div>
 
 </div>
