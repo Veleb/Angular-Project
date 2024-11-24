@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,5 +10,16 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  constructor(private userService: UserService, private router: Router) {}
 
+  onLogout(): void {
+    this.userService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']); 
+      },
+      error: (err) => {
+        console.error('Error during logout', err);
+      },
+    });
+  }
 }

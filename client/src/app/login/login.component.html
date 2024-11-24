@@ -1,0 +1,29 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <h2>Welcome to BUYnSELL</h2>
+
+  <input 
+    ngModel 
+    name="username" 
+    class="form-input" 
+    type="text" 
+    placeholder="Username:" 
+    required 
+    #username="ngModel">
+
+  <input 
+    ngModel 
+    name="password" 
+    class="form-input" 
+    type="password" 
+    placeholder="Password:" 
+    required 
+    #password="ngModel">
+
+  <button 
+    class="register-button" 
+    [disabled]="!form.valid">
+    Register
+  </button>
+
+  <p>Don't have an account? <b class="form-link" routerLink="/register">Register</b></p>
+</form>

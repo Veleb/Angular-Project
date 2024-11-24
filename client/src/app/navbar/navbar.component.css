@@ -14,7 +14,7 @@
   font-weight: 800;
   text-transform: uppercase;
   color: white;
-  /* font-family: 'Courier New', Courier, monospace; */
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .nav-link:hover {
@@ -26,4 +26,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 15px;
+}
+
+button {
+    background: none;
+    border: none;
 }

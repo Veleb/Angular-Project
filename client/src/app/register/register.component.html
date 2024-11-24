@@ -1,0 +1,38 @@
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <h2>Welcome to BUYnSELL</h2>
+
+  <input 
+    ngModel 
+    name="username" 
+    class="form-input" 
+    type="text" 
+    placeholder="Username:" 
+    required 
+    #username="ngModel">
+
+  <input 
+    ngModel 
+    name="password" 
+    class="form-input" 
+    type="password" 
+    placeholder="Password:" 
+    required 
+    #password="ngModel">
+
+  <input 
+    ngModel 
+    name="repass" 
+    class="form-input" 
+    type="password" 
+    placeholder="Confirm password:" 
+    required 
+    #repass="ngModel">
+
+  <button 
+    class="register-button" 
+    [disabled]="!form.valid">
+    Register
+  </button>
+
+  <p>Already have an account? <b class="form-link" routerLink="/login">Login</b></p>
+</form>

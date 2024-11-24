@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../constants.js';
+import jwtp from '../libs/jwtp.js';
 const SECRET = JWT_SECRET;
 
 export const authMiddleware = async (req, res, next) => { // ✔️
@@ -10,7 +10,7 @@ export const authMiddleware = async (req, res, next) => { // ✔️
   }
 
   try {
-    const decodedToken = await jwt.verify(token, SECRET);
+    const decodedToken = await jwtp.verify(token, SECRET);
     
     const user = {
       _id: decodedToken._id,

@@ -4,18 +4,17 @@ import userService from '../services/userService.js';
 const userController = Router();
 
 userController.post('/register', async (req, res) => { // ✔️
-    
     try {
+        
+        const { username, password } = req.body;
 
-        const { username, password } = req.body; // change if needed
-
-        const result = await userService.register(username, password);
-
-        res.cookie("auth", result, { httpOnly: true });
+        const result = await userService.register({username, password});
+        
+        res.cookie("auth", result.accessToken, { httpOnly: true });
 
         res.json(result);
         
-    } catch (err) {
+    } catch (message) {
         res.status(400).json({ message })
     }
 });
@@ -24,13 +23,13 @@ userController.post('/login', async (req, res) => { // ✔️
     const { username, password } = req.body;
 
     try {
-        const result = await userService.login(username, password);
+        const result = await userService.login({username, password});
 
-        res.cookie("auth", result, { httpOnly: true });
+        res.cookie("auth", result.accessToken, { httpOnly: true });
 
         res.json(result);
         
-    } catch (err) {
+    } catch (message) {
         res.status(400).json({ message })
     }
 });

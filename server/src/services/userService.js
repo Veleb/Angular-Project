@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import User from "../models/User.js";
-import { JWT_SECRET } from '../constants.js';
+import jwtp from '../libs/jwtp.js';
 
-async function register(username, password) { // ✔️
+async function register({username, password}) { // ✔️
 
     const user = await User.findOne({ username });
 
@@ -12,12 +11,13 @@ async function register(username, password) { // ✔️
     }
 
     const createdUser = await User.create({ username, password });
-
+    
     const result = generateResponse(createdUser);
+    
     return result;
 }
 
-async function login(username, password) { // ✔️
+async function login({username, password}) { // ✔️
     const user = await User.findOne({ username });
 
     if (!user) {
@@ -35,19 +35,25 @@ async function login(username, password) { // ✔️
     return result;
 }
 
-function generateResponse(user) { //✔️ 
+async function generateResponse(user) { 
     const payload = {
         _id: user._id,
         username: user.username,
     };
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '2h' });
 
-    return {
-        _id: user._id,
-        username: user.username,
-        accessToken: token,
-    };
+    try {
+        const token = await jwtp.sign(payload, "hogohihoighiqho1hoi38hggho", { expiresIn: '2h' }); // idek how to make it work it'z bugged
+
+        return {
+            _id: user._id,
+            username: user.username,
+            accessToken: token,
+        };
+    } catch (error) {
+        console.error("Error generating token:", error);
+        throw new Error('Token generation failed');
+    }
 }
 
 const userService = { // ✔️

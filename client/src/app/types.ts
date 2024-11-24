@@ -17,3 +17,10 @@ export interface Product {
     | 'Music & Movies';
   _ownerId: string; 
 }
+
+export interface User {
+  username: string,
+  password: string,
+  userProducts: Product[],
+  
+}

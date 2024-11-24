@@ -4,6 +4,10 @@ import bcrypt from 'bcrypt';
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
+  userProducts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  }]
 });
 
 userSchema.pre("save", async function () {
