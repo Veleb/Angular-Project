@@ -1,6 +1,5 @@
 import { JWT_SECRET } from '../constants.js';
 import jwtp from '../libs/jwtp.js';
-const SECRET = JWT_SECRET;
 
 export const authMiddleware = async (req, res, next) => { // ✔️
   const token = req.cookies?.['auth'];
@@ -10,7 +9,7 @@ export const authMiddleware = async (req, res, next) => { // ✔️
   }
 
   try {
-    const decodedToken = await jwtp.verify(token, SECRET);
+    const decodedToken = await jwtp.verify(token, JWT_SECRET);
     
     const user = {
       _id: decodedToken._id,

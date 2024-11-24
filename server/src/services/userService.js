@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import jwtp from '../libs/jwtp.js';
 
+import { JWT_SECRET } from '../constants.js';
+
 async function register({username, password}) { // ✔️
 
     const user = await User.findOne({ username });
@@ -43,7 +45,7 @@ async function generateResponse(user) {
 
 
     try {
-        const token = await jwtp.sign(payload, "hogohihoighiqho1hoi38hggho", { expiresIn: '2h' }); // idek how to make it work it'z bugged
+        const token = await jwtp.sign(payload, JWT_SECRET, { expiresIn: '2h' });
 
         return {
             _id: user._id,
