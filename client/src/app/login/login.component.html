@@ -1,28 +1,91 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
   <h2>Welcome to BUYnSELL</h2>
 
-  <input 
-    ngModel 
-    name="username" 
-    class="form-input" 
-    type="text" 
-    placeholder="Username:" 
-    required 
-    #username="ngModel">
+  <div class="form-group">
+    <input 
+      [class]="
+         ( ( username.touched && username?.errors?.['required'] )
+         || ( username.touched && username?.errors?.['minlength'] )
+         || ( username.touched && username?.errors?.['maxlength'] )
+         || ( username.touched && username?.errors?.['usernameValidator'] ))
+          ? 'error' 
+          : 'success' "
+          
+      ngModel 
+      name="username" 
+      class="form-input" 
+      type="text" 
+      placeholder="Username:" 
+      required 
+      #username="ngModel"
+      minlength="6"
+      maxlength="20"
+      appUsername="username"
+      >
 
-  <input 
-    ngModel 
-    name="password" 
-    class="form-input" 
-    type="password" 
-    placeholder="Password:" 
-    required 
-    #password="ngModel">
+      @if (username.touched) {
+        <div class="errors">
+          @if (username?.errors?.['required']) {
+            <p class="input-error">Username is required!</p>
+          }
+          @if (username?.errors?.['minlength']) {
+            <p class="input-error">Username must be at least 6 characters long!</p>
+          }
+          @if (username?.errors?.['maxlength']) {
+            <p class="input-error">Username must shorter than 20 characters!</p>
+          }
+          @if (username?.errors?.['usernameValidator']) {
+            <p class="input-error">Username isn't valid! Valid characters are alphanumeric values as well as ( . _ )</p>
+          }
+        </div>
+      }
+
+  </div>
+
+  <div class="form-group">
+    <input 
+      [class]="
+      ( ( password.touched && password?.errors?.['required'] )
+      || ( password.touched && password?.errors?.['minlength'] )
+      || ( password.touched && password?.errors?.['maxlength'] )
+      || ( password.touched && password?.errors?.['passwordValidator'] ))
+       ? 'error' 
+       : 'success' "
+      ngModel 
+      name="password" 
+      class="form-input" 
+      [type]="passwordVisible ? 'text' : 'password' " 
+      placeholder="Password:" 
+      required 
+      #password="ngModel"
+      minlength="8"
+      maxlength="64"
+      appPassword="password">
+      
+      <i [class]="passwordVisible ? 'fa-solid fa-eye password-icon' : 'fa-solid fa-eye-slash password-icon' " (click)="togglePasswordVisibility()"></i> 
+      
+      @if (password.touched) {
+        <div class="errors">
+          @if (password?.errors?.['required']) {
+            <p class="input-error">Password is required!</p>
+          }
+          @if (password?.errors?.['minlength']) {
+            <p class="input-error">Password must be at least 8 characters long!</p>
+          }
+          @if (password?.errors?.['maxlength']) {
+            <p class="input-error">Password must shorter than 64 characters!</p>
+          }
+          @if (password?.errors?.['passwordValidator']) {
+            <p class="input-error">Password isn't valid! Valid characters are alphanumeric values as well as ( &#64; ! _ )</p>
+          }
+        </div>
+      }
+  </div>
 
   <button 
-    class="register-button" 
+    class="login-button" 
     [disabled]="!form.valid">
-    Register
+    Login
   </button>
 
   <p>Don't have an account? <b class="form-link" routerLink="/register">Register</b></p>
