@@ -16,6 +16,7 @@ export interface Product {
     | 'Groceries'
     | 'Music & Movies';
   _ownerId: string; 
+  _id: string,
 }
 
 export interface User {

@@ -1,0 +1,7 @@
+<div class="product-card-wrapper">
+  <img [src]="product.image" alt="Product Image">
+  <h2>{{ product.name }}</h2>
+  <p>${{ product.price }}</p>
+  <button class="eye-button" [routerLink]="'/product/' + product._id" ><i class="fa-regular fa-eye"></i></button>
+  <button (click)="favoriteProduct(product._id)" class="heart-button"><i class="fa-regular fa-heart"></i></button>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../types';
-import { ProductCardComponent } from '../helper/product-card/product-card.component';
+import { ProductCardComponent } from '../products/product-card/product-card.component';
 
 @Component({
   selector: 'app-catalog',

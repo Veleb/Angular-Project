@@ -16,5 +16,13 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.API_LINK + '/products');
   }
+
+  getProductById(productId: string): Observable<Product> {
+    return this.http.get<Product>(this.API_LINK + `/products/${productId}`);
+  }
+
+  deleteProductById(productId: string | undefined): Observable<Product> {
+    return this.http.delete<Product>(this.API_LINK + `/products/${productId}`);
+  }
   
 }

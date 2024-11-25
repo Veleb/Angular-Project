@@ -1,0 +1,48 @@
+.details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-image {
+  height: 500px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.header {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.product-data-wrapper {
+  background-color: rgb(218, 218, 222);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.data-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.buttons-wrapper, .owner-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+button {
+  padding: 10px;
+  min-width: 70px;
+  border-radius: 12px;
+  border: 2px solid black;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+button:hover {
+  cursor: pointer;
+}

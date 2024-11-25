@@ -3,9 +3,9 @@ import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
 
-  const router = inject(Router)
+  const router: Router = inject(Router)
 
-  const isLogged = false; // change to auth service check if the user is logged in 
+  const isLogged: boolean = false; // change to auth service check if the user is logged in 
 
   if (isLogged) {
     return true;
