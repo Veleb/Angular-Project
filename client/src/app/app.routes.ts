@@ -4,6 +4,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ErrorComponent } from './error/error.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
