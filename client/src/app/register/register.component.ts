@@ -1,18 +1,24 @@
 import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { UsernameDirective } from '../directives/username.directive';
+import { PasswordDirective } from '../directives/password.directive';
+import { RepasswordDirective } from '../directives/repassword.directive';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ RouterLink, FormsModule ],
+  imports: [ RouterLink, FormsModule, UsernameDirective, PasswordDirective, RepasswordDirective ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
 
   constructor(private userService: UserService) {}
+
+  passwordVisible: boolean = false;
+  rePasswordVisible: boolean = false;
 
   onSubmit(formElement: NgForm): void {
     const formData = formElement.value;
@@ -37,5 +43,24 @@ export class RegisterComponent {
 
     formElement.reset();
 
+  }
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  toggleRepasswordVisibility(): void {
+    this.rePasswordVisible = !this.rePasswordVisible;
+  }
+
+  onPasswordChange(repass: NgModel) {
+
+    if (repass) {
+      repass.control.updateValueAndValidity();
+    }
+  }
+
+  blockEvent(event: Event) {
+    event.preventDefault();
   }
 }

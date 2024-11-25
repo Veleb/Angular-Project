@@ -32,3 +32,36 @@ form {
 .form-link:hover {
   cursor: pointer;
 }
+
+.input-error {
+  color: red;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.form-group {
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.error {
+  border: 2px solid red
+}
+
+.success {
+  border: 2px solid greenyellow;
+}
+
+.password-icon {
+  position: absolute;
+  margin-top: 7px;
+  margin-left: 220px;
+  font-size: 16px;
+  transition: 0.6s;
+}
+
+.password-icon:hover {
+  cursor: pointer;
+}
