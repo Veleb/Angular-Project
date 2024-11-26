@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../types';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
+import { environment } from '../../environment';
 
 @Component({
   selector: 'app-catalog',
@@ -29,18 +30,7 @@ export class CatalogComponent implements OnInit {
     });
   }
 
-  categories = [
-    'Electronics',
-    'Fashion',
-    'Home & Living',
-    'Books',
-    'Toys',
-    'Sports & Outdoors',
-    'Health & Beauty',
-    'Automotive',
-    'Groceries',
-    'Music & Movies'
-  ];
+  categories = environment.categories;
 
   onCategoryChange(event: Event): void {
     const target = event.target as HTMLInputElement;

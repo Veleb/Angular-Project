@@ -1,0 +1,115 @@
+<form [formGroup]="form" class="" (ngSubmit)="createProduct()">
+
+  <div class="form-group-wrapper">
+
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" type="text" />
+
+    @if (formTextGetter('name')?.touched && formTextGetter('name')?.invalid) {
+      <div>
+        @if (formTextGetter('name')?.hasError('required')) {
+          <p class="input-error">Name is required.</p>
+        }
+      </div>
+    }
+
+  </div>
+
+  <div class="form-group-wrapper">
+
+    <label for="price">Price</label>
+    <input id="price" formControlName="price" type="number" />
+
+    @if (formTextGetter('price')?.touched && formTextGetter('price')?.invalid) {
+      <div>
+        @if (formTextGetter('price')?.hasError('required')) {
+          <p class="input-error">Price is required.</p>
+        }
+        @if (formTextGetter('price')?.hasError('min')) {
+          <p class="input-error">Price must be greater than 0.</p>
+        }
+      </div>
+
+    }
+  </div>
+
+  <div class="form-group-wrapper">
+
+    <label for="quantity">Quantity</label>
+    <input id="quantity" formControlName="quantity" type="number" />
+
+    @if (formTextGetter('quantity')?.touched && formTextGetter('quantity')?.invalid) {
+      <div>
+        @if (formTextGetter('quantity')?.hasError('required')) {
+          <p class="input-error">Quantity is required.</p>
+        }
+        @if (formTextGetter('quantity')?.hasError('min')) {
+          <p class="input-error">Quantity must be at least 1.</p>
+        }
+      </div>
+
+    }
+  </div>
+
+  <div class="form-group-wrapper">
+
+    <label for="image">Image URL</label>
+    <input id="image" formControlName="image" type="text" />
+
+    @if (formTextGetter('image')?.touched && formTextGetter('image')?.invalid) {
+      <div>
+        @if (formTextGetter('image')?.hasError('required')) {
+          <p class="input-error">Image URL is required.</p>
+        }
+        @if (formTextGetter('image')?.hasError('pattern')) {
+          <p class="input-error">Enter a valid image URL.</p>
+        }
+      </div>
+
+    }
+  </div>
+
+  <div class="form-group-wrapper">
+
+    <label for="description">Description</label>
+    <textarea rows="5" id="description" formControlName="description"></textarea>
+
+    @if (formTextGetter('description')?.touched && formTextGetter('description')?.invalid) {
+      <div>
+        @if (formTextGetter('description')?.hasError('required')) {
+          <p class="input-error">Description is required.</p>
+        }
+        @if (formTextGetter('description')?.hasError('minLength')) {
+          <p class="input-error">Description must be at least 10 characters.</p>
+        }
+      </div>
+
+    }
+  </div>
+
+  <div class="form-group-wrapper">
+
+    <label for="category">Category</label>
+    <select id="category" formControlName="category">
+
+      <option value="" disabled selected>Select a category</option>
+
+      @for (category of categories; track $index) {
+        <option [value]="category">
+          {{ category }}
+        </option>
+      }
+    </select>
+
+    @if (formTextGetter('category')?.touched && formTextGetter('category')?.invalid) {
+      <div>
+        @if (formTextGetter('category')?.hasError('required')) {
+          <p class="input-error">Category is required.</p>
+        }
+      </div>
+
+    }
+  </div>
+
+  <button class="create-button" [disabled]="form.invalid">Create Product</button>
+</form>
