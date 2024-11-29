@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { UsernameDirective } from '../directives/username.directive';
-import { PasswordDirective } from '../directives/password.directive';
+import { UserService } from '../user.service';
+import { UsernameDirective } from '../../directives/username.directive';
+import { PasswordDirective } from '../../directives/password.directive';
 
 @Component({
   selector: 'app-login',
