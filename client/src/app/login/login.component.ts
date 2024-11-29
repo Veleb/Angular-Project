@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { UsernameDirective } from '../directives/username.directive';
 import { PasswordDirective } from '../directives/password.directive';
@@ -13,7 +13,8 @@ import { PasswordDirective } from '../directives/password.directive';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  constructor(private userService: UserService) {}
+
+  constructor(private userService: UserService, private router: Router) {}
 
   passwordVisible: boolean = false;
 
@@ -24,11 +25,9 @@ export class LoginComponent {
 
     this.userService.login(username, password).subscribe({
       next: (response) => {
-        console.log(response);
+        this.router.navigate(['catalog']);
       },
       error: (error) => {
-        console.log({error});
-        
         console.error(`Error registering user: ${{error}}`);
       }
     })

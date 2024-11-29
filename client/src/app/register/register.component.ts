@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm, NgModel } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { UsernameDirective } from '../directives/username.directive';
 import { PasswordDirective } from '../directives/password.directive';
@@ -15,7 +15,7 @@ import { RepasswordDirective } from '../directives/repassword.directive';
 })
 export class RegisterComponent {
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   passwordVisible: boolean = false;
   rePasswordVisible: boolean = false;
@@ -32,11 +32,10 @@ export class RegisterComponent {
 
     this.userService.register(username, password).subscribe({
       next: (response) => {
-        console.log(response);
+        // ADD CONFIRMATION TOAsT
+        this.router.navigate(['catalog']);
       },
       error: (error) => {
-        console.log({error});
-        
         console.error(`Error registering user: ${{error}}`);
       }
     })

@@ -2,11 +2,15 @@
   <div routerLink="/home" class="nav-link"><h2>Home</h2></div>
   <div routerLink="/catalog" class="nav-link">Catalog</div>
   <div class="nav-auth-group">
-    <div routerLink="/register" class="nav-link">Register</div>
-    <div routerLink="/login" class="nav-link">Login</div>
-    <button (click)="onLogout()" class="nav-link">Logout</button>
+    @if (isLogged) {
+      <button (click)="onLogout()" class="nav-link">Logout</button>
+    } @else {
+      <div routerLink="/register" class="nav-link">Register</div>
+      <div routerLink="/login" class="nav-link">Login</div>
+    }
   </div>
-
-  <div class="nav-link" routerLink="/profile" >PROFILE</div>
+  @if (isLogged) {
+    <div class="nav-link" routerLink="/profile" >PROFILE</div>
+  }
 
 </div>

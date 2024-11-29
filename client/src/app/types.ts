@@ -19,7 +19,7 @@ export interface Product {
   _id: string,
 }
 
-export interface SanitizedUser {
+export interface AuthUser {
   username: string,
   userProducts: Product[],
   _id: string, 

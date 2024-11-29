@@ -12,6 +12,10 @@ import { UserService } from '../services/user.service';
 export class NavbarComponent {
   constructor(private userService: UserService, private router: Router) {}
 
+  get isLogged(): boolean {
+    return this.userService.isLogged;
+  }
+
   onLogout(): void {
     this.userService.logout().subscribe({
       next: () => {

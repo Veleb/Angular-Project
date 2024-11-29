@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { SanitizedUser, User } from '../types';
+import { AuthUser, User } from '../types';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +11,7 @@ import { SanitizedUser, User } from '../types';
 })
 export class ProfileComponent implements OnInit {
 
-  user: SanitizedUser | null = null;
+  user: AuthUser | null = null;
 
   constructor(private userService: UserService) {}
 
