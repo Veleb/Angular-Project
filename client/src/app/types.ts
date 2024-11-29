@@ -19,9 +19,14 @@ export interface Product {
   _id: string,
 }
 
+export interface SanitizedUser {
+  username: string,
+  userProducts: Product[],
+  _id: string, 
+}
 export interface User {
   username: string,
   password: string,
   userProducts: Product[],
-  
+  _id: string, 
 }

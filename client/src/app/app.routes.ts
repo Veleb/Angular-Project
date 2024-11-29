@@ -8,6 +8,7 @@ import { DetailsComponent } from './products/details/details.component';
 import { authGuard } from './guards/auth.guard';
 import { EditComponent } from './products/edit/edit.component';
 import { CreateComponent } from './products/create/create.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: ":id", component: DetailsComponent },
     { path: "edit/:id", component: EditComponent }
   ] },
+  { path: 'profile', component: ProfileComponent },
   { path: "register", component: RegisterComponent },
   { path: "login", component: LoginComponent },
   { path: "**", component: ErrorComponent }

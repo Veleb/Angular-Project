@@ -24,7 +24,7 @@
   background-color: cadetblue;
 }
 
-.heart-button {
+.saved-button {
   height: 35px;
   width: 35px;
   border-radius: 50%;
@@ -32,7 +32,7 @@
   transition: 0.6s;
 }
 
-.eye-button:hover, .heart-button {
+.eye-button:hover, .saved-button {
   cursor: pointer;
 }
 

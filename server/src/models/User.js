@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
   userProducts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
-  }]
-});
+  }],
+}, { timestamps: { createdAt: 'created_at' } });
 
 userSchema.pre("save", async function () {
 

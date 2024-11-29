@@ -40,6 +40,21 @@ userController.get('/logout', (req, res) => { // ✔️
     res.status(204).end();
 });
 
+userController.get('/profile', async (req, res) => { // ✔️
+    const userId = req.user?._id;
+    
+    try {
+        const response = await userService.getUserById(userId);
+        
+        res.json(response);
+
+
+    } catch(err) {
+        res.status(400).json(`Error fetching profile: ${err.message}`)
+    }
+
+})
+
 export default userController;
 
 // ✔️

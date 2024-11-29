@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from "../models/User.js";
 import jwtp from '../libs/jwtp.js';
-
+import { removePassword } from '../utils/auth.js'
 import { JWT_SECRET } from '../constants.js';
 
 async function register({username, password}) { // ✔️
@@ -58,9 +58,19 @@ async function generateResponse(user) {
     }
 }
 
+async function getUserById(userId) {
+    const user = await User.findById(userId).lean();
+
+    const response = removePassword(user);
+
+    return response;
+}   
+
 const userService = { // ✔️
     register,
     login,
+    getUserById,
+
 }
 
 export default userService;

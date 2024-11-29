@@ -9,20 +9,18 @@ import { environment } from '../../environment';
 })
 export class ProductService {
   
-  API_LINK = environment.API_LINK;
-  
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.API_LINK + '/products');
+    return this.http.get<Product[]>(`/api/products`);
   }
 
   getProductById(productId: string): Observable<Product> {
-    return this.http.get<Product>(this.API_LINK + `/products/${productId}`);
+    return this.http.get<Product>(`/api/products/${productId}`);
   }
 
   deleteProductById(productId: string | undefined): Observable<Product> {
-    return this.http.delete<Product>(this.API_LINK + `/products/${productId}`);
+    return this.http.delete<Product>(`/api/products/${productId}`);
   }
   
 }
