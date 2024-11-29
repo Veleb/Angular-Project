@@ -1,25 +1,30 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AuthUser, User } from '../types';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnDestroy{
 
   user$$ = new BehaviorSubject<AuthUser | null>(null);
   user$ = this.user$$.asObservable();
   user: AuthUser | null = null;
+  userSubscription: Subscription | null = null;
 
   constructor(private http: HttpClient) {
-    this.user$.subscribe( (user) => {
+    this.userSubscription = this.user$.subscribe( (user) => {
       this.user = user;
     })
    }
 
   get isLogged(): boolean {
     return !!this.user;
+  }
+
+  get getUser(): AuthUser | null {
+    return this.user;
   }
 
   register(username: string, password: string): Observable<User> {
@@ -46,5 +51,9 @@ export class UserService {
     return this.http.get<AuthUser>(`/api/users/profile`).pipe(
       tap((user) => this.user$$.next(user))
     );
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription?.unsubscribe();
   }
 }

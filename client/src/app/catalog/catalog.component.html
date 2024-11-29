@@ -2,29 +2,31 @@
   <div class="sidebar">
     <div class="product-filters">
       @for (category of categories; track $index) {
-        <div class="filter">
-          <input 
-            [id]= "category"
-            class="filter-input"
-            type="checkbox" 
-            [value]="category" 
-            (change)="onCategoryChange($event)" 
-            />
-          <label [htmlFor]="category"  class="filter-label">{{ category }}</label>
-        </div> 
+      <div class="filter">
+        <input
+          [id]="category"
+          class="filter-input"
+          type="checkbox"
+          [value]="category"
+          (change)="onCategoryChange($event)"
+        />
+        <label [htmlFor]="category" class="filter-label">{{ category }}</label>
+      </div>
       }
     </div>
   </div>
 
   <div class="product-section">
     @if (filteredProducts.length !== 0) {
-      @for (product of filteredProducts; track $index) {
-        <app-product-card [product]="product"></app-product-card>
-      }
-    } @else {
-      <h1>No items found!</h1>
-    }
       
-  </div>
+       @for (product of filteredProducts; track $index) {
 
+        <app-product-card [product]="product" [user]="user"></app-product-card>
+
+    } } @else {
+      
+      <h1>No items found!</h1>
+
+    }
+  </div>
 </div>

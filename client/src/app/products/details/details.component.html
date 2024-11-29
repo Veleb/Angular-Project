@@ -11,15 +11,17 @@
       <h2>Qnt: {{ product?.quantity }}</h2>
       <h2>Description: {{ product?.description }}</h2>
     </div>
-<!-- Check if the user is the owner of the product with auth service and put that in an @if statement ALsO ADD INFO AVOUT THE UZER -->
     <div class="buttons-wrapper">
 
-      <div class="owner-buttons">
-        <button [routerLink]="'/product/edit/' + product?._id" class="button edit">Edit</button>
-        <button (click)="deleteProduct(product?._id)" class="button delete">Delete</button>
-      </div>
-<!-- add uzer id -->
-      <button (click)="startChat(product?._id, product?._ownerId)" class="button chat-button"><i class="fa-regular fa-comment"></i></button>
+      @if (user?._id === product?._ownerId) {
+        <div class="owner-buttons">
+          <button [routerLink]="'/product/edit/' + product?._id" class="button edit">Edit</button>
+          <button (click)="deleteProduct(product?._id)" class="button delete">Delete</button>
+        </div>
+      } @else {
+        <button (click)="startChat(product?._id, product?._ownerId)" class="button chat-button"><i class="fa-regular fa-comment"></i></button>
+      }
+
     </div>
 
   </div>

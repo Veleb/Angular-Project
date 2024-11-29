@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../services/product.service';
-import { Product } from '../types';
+import { ProductService } from '../products/product.service';
+import { AuthUser, Product } from '../types';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
 import { environment } from '../../environment';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-catalog',
@@ -16,7 +17,9 @@ export class CatalogComponent implements OnInit {
   selectedCategories: String[] = [];
   filteredProducts: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  user: AuthUser | null = null;
+
+  constructor(private productService: ProductService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
@@ -28,6 +31,8 @@ export class CatalogComponent implements OnInit {
         console.error(`Error fetching products: ${error}`);
       }
     });
+
+    this.user = this.userService.getUser
   }
 
   categories = environment.categories;

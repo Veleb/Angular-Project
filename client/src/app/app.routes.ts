@@ -9,6 +9,7 @@ import { EditComponent } from './products/edit/edit.component';
 import { CreateComponent } from './products/create/create.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { authGuard } from './guards/auth.guard';
+import { ownerGuard } from './guards/owner.guard';
 
 export const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -17,7 +18,7 @@ export const routes: Routes = [
   { path: "product", children: [
     { path: 'create', component: CreateComponent, canActivate: [authGuard] },
     { path: ":id", component: DetailsComponent },
-    { path: "edit/:id", component: EditComponent, canActivate: [authGuard] }
+    { path: "edit/:id", component: EditComponent, canActivate: [ownerGuard] }
   ] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: "register", component: RegisterComponent },
