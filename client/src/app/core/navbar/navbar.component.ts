@@ -15,15 +15,4 @@ export class NavbarComponent {
   get isLogged(): boolean {
     return this.userService.isLogged;
   }
-
-  onLogout(): void {
-    this.userService.logout().subscribe({
-      next: () => {
-        this.router.navigate(['/login']); 
-      },
-      error: (err) => {
-        console.error('Error during logout', err);
-      },
-    });
-  }
 }

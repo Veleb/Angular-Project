@@ -21,14 +21,9 @@
   cursor: pointer;
 }
 
-.nav-auth-group {
+.nav-auth-group, .product-group-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-}
-
-button {
-    background: none;
-    border: none;
 }

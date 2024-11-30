@@ -1,6 +1,7 @@
 @if (isOwnProfile) {
   <div>
     <p>Welcome back, {{ user?.username }}</p>
+    <button (click)="onLogout()" class="logout-button">Logout</button>
   </div>
 } @else {
   <div>

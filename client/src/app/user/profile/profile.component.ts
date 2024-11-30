@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { AuthUser, User } from '../../types';
 
@@ -17,7 +17,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +47,17 @@ export class ProfileComponent implements OnInit {
           }
         });
       }
+    });
+  }
+
+  onLogout(): void {
+    this.userService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']); 
+      },
+      error: (err) => {
+        console.error('Error during logout', err);
+      },
     });
   }
 }
