@@ -64,13 +64,21 @@ async function getUserById(userId) {
     const response = removePassword(user);
 
     return response;
+}
+
+async function getUsers(userId) {
+    const users = await User.find().lean();
+
+    const response = users.map(user => removePassword(user));
+
+    return response;
 }   
 
 const userService = { // ✔️
     register,
     login,
     getUserById,
-
+    getUsers
 }
 
 export default userService;

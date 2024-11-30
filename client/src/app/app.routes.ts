@@ -20,7 +20,10 @@ export const routes: Routes = [
     { path: ":id", component: DetailsComponent },
     { path: "edit/:id", component: EditComponent, canActivate: [ownerGuard] }
   ] },
-  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
+  { path: 'profile', children: [
+    { path: '', component: ProfileComponent, canActivate: [authGuard] },
+    { path: ':id', component: ProfileComponent, canActivate: [authGuard] },
+  ]},
   { path: "register", component: RegisterComponent },
   { path: "login", component: LoginComponent },
   { path: "**", component: ErrorComponent }

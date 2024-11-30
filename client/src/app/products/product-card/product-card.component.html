@@ -1,5 +1,16 @@
 <div class="product-card-wrapper">
   <img [src]="product.image" alt="Product Image">
+
+  <div class="user-card">
+    <!-- <img [src]="owner?.profilePicture" alt=""> -->
+    <i class="fa-solid fa-user user-icon"></i> <!-- CHANGE TO JUST RESIZE THE PHOTO AND MAKE THE BACKGROUND BLACKER -->
+    @if (isOwner) {
+      <p class="user-card-username" [routerLink]="'/profile/' + owner?._id">{{ owner?.username }} - OWNER</p>
+    } @else {
+      <p class="user-card-username" [routerLink]="'/profile/' + owner?._id">{{ owner?.username }}</p>
+    }
+  </div>
+
   <h2>{{ product.name }}</h2>
   <p>${{ product.price }}</p>
   <button class="eye-button" [routerLink]="'/product/' + product._id" ><i class="fa-regular fa-eye"></i></button>

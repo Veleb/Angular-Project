@@ -25,19 +25,20 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.route.params.subscribe({
-      next: (params) => {
+    this.route.paramMap.subscribe(params => {
 
-        if (params['id']) {
-          this.productService.getProductById(params['id']).subscribe({
-            next: (data) => this.product = data,
+      const productId = params.get('id')
+
+        if (productId) {
+          this.productService.getProductById(productId).subscribe({
+            next: (productData: Product) => {
+              this.product = productData; 
+            },
             error: (err) => console.error(`Error fetching product by id: ${err}`)
           });
         }
 
-      },
-      error: (err) => console.error(`Error getting product id: ${err}`)
-    });
+      });
 
     this.user = this.userService.getUser;
   }

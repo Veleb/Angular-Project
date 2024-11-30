@@ -55,6 +55,34 @@ userController.get('/profile', async (req, res) => { // ✔️
 
 })
 
+userController.get('/profiles', async (req, res) => { // ✔️
+    try {
+        const response = await userService.getUsers();
+        
+        res.json(response);
+
+
+    } catch(err) {
+        res.status(400).json(`Error fetching profiles: ${err.message}`)
+    }
+
+})
+
+userController.get('/profile/:profileId', async (req, res) => { // ✔️
+    const profileId = req.params.profileId;
+    
+    try {
+        const response = await userService.getUserById(profileId);
+        
+        res.json(response);
+
+
+    } catch(err) {
+        res.status(400).json(`Error fetching profile: ${err.message}`)
+    }
+
+})
+
 export default userController;
 
 // ✔️

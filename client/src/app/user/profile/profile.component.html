@@ -1,3 +1,10 @@
-<p>profile works!</p>
+@if (isOwnProfile) {
+  <div>
+    <p>Welcome back, {{ user?.username }}</p>
+  </div>
+} @else {
+  <div>
+    <p>You are viewing {{ user?.username }}'s profile.</p>
+  </div>
+}
 
-<h1>{{ user?.username }}</h1>

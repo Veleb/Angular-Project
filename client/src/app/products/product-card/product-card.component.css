@@ -1,5 +1,5 @@
 .product-card-wrapper {
-  height: 225px;
+  height: 250px;
   min-width: 200px;
   border-radius: 12px;
   background-color: #c3c3c3;
@@ -38,4 +38,24 @@
 
 .eye-button i {
   color: white;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 5px;
+}
+
+.user-icon {
+  font-size: 14px; /* CHANGE THIZ TO HEIGHT AND WIDTH */
+}
+
+.user-icon:hover {
+  cursor: pointer;
+}
+
+.user-card-username:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
