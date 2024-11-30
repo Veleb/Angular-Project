@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Product } from '../types';
+import { Product, ProductDataInterface } from '../types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,4 +22,8 @@ export class ProductService {
     return this.http.delete<Product>(`/api/products/${productId}`);
   }
   
+  createProduct(productData: ProductDataInterface): Observable<Product> {
+    return this.http.post<Product>('/api/products', productData);
+  }
+
 }

@@ -3,12 +3,27 @@
   <div class="form-group-wrapper">
 
     <label for="name">Name</label>
-    <input id="name" formControlName="name" type="text" />
+    <input pattern="[a-zA-Z0-9\-]+" id="name" formControlName="name" type="text" [class]="
+    ( ( formTextGetter('name')?.touched && formTextGetter('name')?.hasError('required') )
+    || ( formTextGetter('name')?.touched && formTextGetter('name')?.hasError('minlength') )
+    || ( formTextGetter('name')?.touched && formTextGetter('name')?.hasError('maxlength') )
+    || ( formTextGetter('name')?.touched && formTextGetter('name')?.hasError('pattern') )) 
+    ? 'error' 
+    : 'success' "/>
 
     @if (formTextGetter('name')?.touched && formTextGetter('name')?.invalid) {
       <div>
         @if (formTextGetter('name')?.hasError('required')) {
           <p class="input-error">Name is required.</p>
+        }
+        @if (formTextGetter('name')?.hasError('minlength')) {
+          <p class="input-error">Product name must be at least 6 characters long.</p>
+        }
+        @if (formTextGetter('name')?.hasError('maxlength')) {
+          <p class="input-error">Product name must be less than 255 characters long.</p>
+        }
+        @if (formTextGetter('name')?.hasError('pattern')) {
+          <p class="input-error">You must use only alphanumeric characters, as well as - (hyphen) and white spaces.</p>
         }
       </div>
     }
@@ -18,7 +33,11 @@
   <div class="form-group-wrapper">
 
     <label for="price">Price</label>
-    <input id="price" formControlName="price" type="number" />
+    <input id="price" formControlName="price" type="number" [class]="
+    ( ( formTextGetter('price')?.touched && formTextGetter('price')?.hasError('required') )
+    || ( formTextGetter('price')?.touched && formTextGetter('price')?.hasError('min')))
+    ? 'error' 
+    : 'success' "/>
 
     @if (formTextGetter('price')?.touched && formTextGetter('price')?.invalid) {
       <div>
@@ -36,7 +55,11 @@
   <div class="form-group-wrapper">
 
     <label for="quantity">Quantity</label>
-    <input id="quantity" formControlName="quantity" type="number" />
+    <input id="quantity" formControlName="quantity" type="number" [class]="
+    ( ( formTextGetter('quantity')?.touched && formTextGetter('quantity')?.hasError('required') )
+    || ( formTextGetter('quantity')?.touched && formTextGetter('quantity')?.hasError('min')))
+    ? 'error' 
+    : 'success' "/>
 
     @if (formTextGetter('quantity')?.touched && formTextGetter('quantity')?.invalid) {
       <div>
@@ -54,7 +77,11 @@
   <div class="form-group-wrapper">
 
     <label for="image">Image URL</label>
-    <input id="image" formControlName="image" type="text" />
+    <input pattern="(https?:\/\/.*\.(?:jpg|jpeg|png|gif|bmp|webp))" id="image" formControlName="image" type="text" [class]="
+    ( ( formTextGetter('image')?.touched && formTextGetter('image')?.hasError('required'))
+    || ( formTextGetter('image')?.touched && formTextGetter('image')?.hasError('pattern')))
+    ? 'error' 
+    : 'success' "/>
 
     @if (formTextGetter('image')?.touched && formTextGetter('image')?.invalid) {
       <div>
@@ -62,7 +89,7 @@
           <p class="input-error">Image URL is required.</p>
         }
         @if (formTextGetter('image')?.hasError('pattern')) {
-          <p class="input-error">Enter a valid image URL.</p>
+          <p class="input-error">Please enter a valid image URL (jpg, jpeg, png, gif, bmp, webp).</p>
         }
       </div>
 
@@ -72,15 +99,31 @@
   <div class="form-group-wrapper">
 
     <label for="description">Description</label>
-    <textarea rows="5" id="description" formControlName="description"></textarea>
+    <textarea
+      rows="5"
+      id="description"
+      formControlName="description"
+      minlength="20"
+      maxlength="300"
+      [class]="
+        (formTextGetter('description')?.touched && formTextGetter('description')?.hasError('required')) ||
+        (formTextGetter('description')?.touched && formTextGetter('description')?.hasError('minlength')) ||
+        (formTextGetter('description')?.touched && formTextGetter('description')?.hasError('maxlength'))
+          ? 'error'
+          : 'success'
+      "></textarea>
 
     @if (formTextGetter('description')?.touched && formTextGetter('description')?.invalid) {
       <div>
         @if (formTextGetter('description')?.hasError('required')) {
           <p class="input-error">Description is required.</p>
+          
         }
-        @if (formTextGetter('description')?.hasError('minLength')) {
-          <p class="input-error">Description must be at least 10 characters.</p>
+        @if (formTextGetter('description')?.hasError('minlength')) {
+          <p class="input-error">Description must be at least 20 characters.</p>
+        }
+        @if (formTextGetter('description')?.hasError('maxlength')) {
+          <p class="input-error">Description must be less than 300 characters.</p>
         }
       </div>
 
@@ -90,7 +133,8 @@
   <div class="form-group-wrapper">
 
     <label for="category">Category</label>
-    <select id="category" formControlName="category">
+    <select id="category" formControlName="category" [class]="
+    ( ( formTextGetter('category')?.touched && formTextGetter('category')?.hasError('required'))) ? 'error' : 'success' ">
 
       <option value="" disabled selected>Select a category</option>
 

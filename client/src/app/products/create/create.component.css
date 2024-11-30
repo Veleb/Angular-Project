@@ -26,10 +26,6 @@ select:hover {
   cursor: pointer;
 }
 
-option:hover {
-
-}
-
 input::placeholder {
   font-weight: 700;
 }
