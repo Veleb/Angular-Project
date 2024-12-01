@@ -51,6 +51,9 @@ async function generateResponse(user) {
             _id: user._id,
             username: user.username,
             accessToken: token,
+            userProducts: user.userProducts,
+            created_at: user.created_at, 
+            updatedAt: user.updatedAt,
         };
     } catch (error) {
         console.error("Error generating token:", error);

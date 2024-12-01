@@ -1,5 +1,3 @@
-import { FormControl } from "@angular/forms";
-
 export interface Product {
   name: string;
   price: number;
@@ -19,6 +17,7 @@ export interface Product {
     | 'Music & Movies';
   _ownerId: string; 
   _id: string,
+  savedBy: string[],
 }
 
 export interface ProductDataInterface {
@@ -40,14 +39,16 @@ export interface ProductDataInterface {
     | 'Music & Movies'
     | null;
 }
-export interface AuthUser {
-  username: string,
-  userProducts: Product[],
-  _id: string, 
-}
+
 export interface User {
-  username: string,
-  password: string,
-  userProducts: Product[],
-  _id: string, 
+  _id: string;
+  username: string;
+  userProducts: Product[];
+  savedProducts: string[];
+  created_at: string;
+  updatedAt: string;
+}
+
+export interface AuthUser extends User { // ✔️
+  accessToken: string;
 }

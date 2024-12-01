@@ -40,8 +40,11 @@ const productSchema = new Schema({
      type: mongoose.Types.ObjectId,
      ref: "User"
   },
-  // timestamps: true,
-}) 
+  savedBy: [{
+     type: mongoose.Types.ObjectId,
+     ref: "User"
+  }],
+}, { timestamps: { createdAt: 'created_at' } }) 
 
 const Product = model('Product', productSchema);
 

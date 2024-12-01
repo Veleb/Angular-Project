@@ -16,6 +16,6 @@
   <button class="eye-button" [routerLink]="'/product/' + product._id" ><i class="fa-regular fa-eye"></i></button>
   
   @if (user?._id !== product._ownerId) {
-    <button (click)="favoriteProduct(product._id)" class="saved-button"><i class="fa-regular fa-bookmark"></i></button>
+    <button (click)="favoriteProduct(product._id)" class="saved-button"><i [class]="isSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark' "></i></button>
   }
 </div>

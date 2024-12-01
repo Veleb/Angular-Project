@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthUser, Product } from '../../types';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../user/user.service';
+import { ProductService } from '../product.service';
 @Component({
   selector: 'app-product-card',
   standalone: true,
@@ -11,14 +12,43 @@ import { UserService } from '../../user/user.service';
 })
 export class ProductCardComponent implements OnInit{
   @Input() product!: Product;
-  @Input() user: AuthUser | null = null;
+  
+  user: AuthUser | null = null;
   owner: AuthUser | null = null;
-  isOwner: boolean | null = null;
 
-  constructor(private userService: UserService) {}
+  isOwner: boolean | null = null;
+  isSaved: boolean | undefined;
+
+  constructor(private userService: UserService, private productService: ProductService) {}
 
   favoriteProduct(productId: string): void {
-    // check if user has already liked the post and make call to api with the product id and the user id that youll get
+    const savedProducts: string[] | undefined = this.userService.getSavedProducts;
+    const hasSaved: boolean | undefined = savedProducts?.includes(productId);
+    
+    if (hasSaved) {
+      this.productService.unsaveProduct(productId).subscribe({
+        next: (res) => {
+          this.isSaved = false;
+            this.user!.savedProducts = savedProducts?.filter(id => id !== productId) || [];
+        },
+        error: (error) => {
+          console.error('Error unsaving product:', error);
+        }
+      }
+      );
+    } else {
+      this.productService.saveProduct(productId).subscribe({
+        next: (res) => {
+          this.isSaved = true;
+          this.user!.savedProducts = [...(savedProducts || []), productId];
+        },
+        error: (error) => {
+          console.error('Error saving product:', error);
+        }
+      }
+      );
+    }
+    
   }
 
   ngOnInit(): void {
@@ -31,7 +61,7 @@ export class ProductCardComponent implements OnInit{
     });
 
     this.user = this.userService.getUser;
-    
     this.isOwner = this.product._ownerId === this.user?._id;
+    this.isSaved = this.userService.getSavedProducts?.includes(this.product._id) ?? false;
   }
 }

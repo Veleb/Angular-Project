@@ -13,7 +13,8 @@ export const authMiddleware = async (req, res, next) => { // ✔️
     
     const user = {
       _id: decodedToken._id,
-      username: decodedToken.username
+      username: decodedToken.username,
+      accessToken: token,
     }
 
     req.user = user;

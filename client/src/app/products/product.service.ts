@@ -26,4 +26,12 @@ export class ProductService {
     return this.http.post<Product>('/api/products', productData);
   }
 
+  saveProduct(productId: string): Observable<Product> {
+    return this.http.post<Product>(`/api/products/save/${productId}`, {});
+  }
+
+  unsaveProduct(productId: string): Observable<Product> {
+    return this.http.delete<Product>(`/api/products/save/${productId}`, {});
+  }
+
 }

@@ -65,4 +65,34 @@ productController.put('/:productId', async (req, res) => {
   }
 })
 
+productController.post('/save/:productId', async (req, res) => {
+  const productId = req.params.productId;
+  const userId = req.user?._id;
+
+  try {
+    
+    const response = await productService.saveProduct(productId, userId);
+
+    res.json(response);
+
+  } catch (err) {
+    res.status(400).json("Error saving product: " + err.message);
+  }
+})
+
+productController.delete('/save/:productId', async (req, res) => {
+  const productId = req.params.productId;
+  const userId = req.user?._id;
+
+  try {
+
+    const response = await productService.unsaveProduct(productId, userId);
+
+    res.json(response);
+
+  } catch (err) {
+    res.json("Error saving product: " + err.message);
+  }
+})
+
 export default productController;
