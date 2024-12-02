@@ -50,7 +50,7 @@ userController.get('/profile', async (req, res) => { // ✔️
 
 
     } catch(err) {
-        res.status(400).json(`Error fetching profile: ${err.message}`)
+        res.status(401).json(`You are not authorized!`)
     }
 
 })

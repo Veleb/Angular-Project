@@ -1,17 +1,18 @@
 <div class="navbar-wrapper">
-  <div routerLink="/home" class="nav-link"><h2>Home</h2></div>
+  <div routerLink="/home" class="nav-link">Home</div>
+
   <div class="product-group-wrapper">
     <div routerLink="/catalog" class="nav-link">Catalog</div>
     <div routerLink="/product/create" class="nav-link">Create</div>
   </div>
+
   <div class="nav-auth-group">
     @if (!isLogged) {
       <div routerLink="/register" class="nav-link">Register</div>
       <div routerLink="/login" class="nav-link">Login</div>
     } 
+    @if (isLogged) {
+      <div class="nav-link" routerLink="/profile" >PROFILE</div>
+    }
   </div>
-  @if (isLogged) {
-    <div class="nav-link" routerLink="/profile" >PROFILE</div>
-  }
-
 </div>
