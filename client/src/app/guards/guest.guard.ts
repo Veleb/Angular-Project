@@ -4,11 +4,11 @@ import { UserService } from '../user/user.service';
 import { catchError, map, of } from 'rxjs';
 
 export const guestGuard: CanActivateFn = (route, state) => {
-
-  const router: Router = inject(Router)
+  const router: Router = inject(Router);
   const userService: UserService = inject(UserService);
 
-  return userService.getProfile().pipe(
+  // when you change thiz to getProifle it workz from the loggedIn zide but not the guezt zide :(((((())))))
+  return userService.user$.pipe(
     map((user) => {
       if (user) {
         router.navigate(['/home']);
@@ -16,10 +16,9 @@ export const guestGuard: CanActivateFn = (route, state) => {
       }
       return true;
     }),
-
     catchError((error) => {
       if (error.status === 401) {
-        return of(true)
+        return of(true);
       }
       router.navigate(['/home']);
       return of(false);

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-error',
+  selector: 'app-page-not-found',
   standalone: true,
   imports: [],
   templateUrl: './error.component.html',
   styleUrl: './error.component.css'
 })
-export class ErrorComponent {
+export class PageNotFoundComponent {
 
 }

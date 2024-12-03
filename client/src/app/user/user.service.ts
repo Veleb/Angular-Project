@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AuthUser, User } from '../types';
-import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, Subscription, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -59,9 +59,13 @@ export class UserService implements OnDestroy {
     );
   }
 
-  getProfile(): Observable<AuthUser> {
-    return this.http.get<AuthUser>(`/api/users/profile`).pipe(
-      tap((user) => this.user$$.next(user))
+  getProfile(): Observable<AuthUser | null> {
+    return this.http.get<AuthUser>('/api/users/profile').pipe(
+      tap((user) => this.user$$.next(user)),
+      catchError((error) => {
+        console.error('Error in getProfile:', error);
+        return of(null);
+      })
     );
   }
 

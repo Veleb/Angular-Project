@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../user/user.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',

@@ -40,20 +40,27 @@ userController.get('/logout', (req, res) => { // ✔️
     res.status(204).end();
 });
 
-userController.get('/profile', async (req, res) => { // ✔️
+userController.get('/profile', async (req, res) => {
     const userId = req.user?._id;
-    
+    const token = req.cookies?.auth; 
+
     try {
-        const response = await userService.getUserById(userId);
-        
-        res.json(response);
+        if (token && userId) {
+            const user = await userService.getUserById(userId);
 
+            if (user) {
+                return res.status(200).json(user);
+            }
 
-    } catch(err) {
-        res.status(401).json(`You are not authorized!`)
+            return res.status(404).json({ message: 'User not found!' });
+        }
+
+        return res.status(401).json({ message: 'Unauthorized!' });
+
+    } catch (err) {
+        res.status(500).json({ message: 'Internal server error!' });
     }
-
-})
+});
 
 userController.get('/profiles', async (req, res) => { // ✔️
     try {
