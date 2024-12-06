@@ -29,6 +29,10 @@ export const routes: Routes = [
     { path: ':id', component: ProfileComponent, canActivate: [authGuard] },
   ]},
 
+  { path: 'chat', children: [
+    // { path: ':productId/:chatId', chatComponent }
+  ]},
+
   { path: "register", component: RegisterComponent, canActivate: [guestGuard] },
   { path: "login", component: LoginComponent, canActivate: [guestGuard] },
 
