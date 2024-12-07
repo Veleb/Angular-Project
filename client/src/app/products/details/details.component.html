@@ -19,7 +19,7 @@
           <button (click)="deleteProduct(product?._id)" class="button delete">Delete</button>
         </div>
       } @else {
-        <button (click)="startChat(product?._id, product?._ownerId)" class="button chat-button"><i class="fa-regular fa-comment"></i></button>
+        <button (click)="startChat(product, product?._ownerId)" class="button chat-button"><i class="fa-regular fa-comment"></i></button>
       }
 
     </div>

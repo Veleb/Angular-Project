@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import jwtp from '../libs/jwtp.js';
 import { removePassword } from '../utils/auth.js'
 import { JWT_SECRET } from '../constants.js';
+import mongoose from 'mongoose';
 
 async function register({username, password}) { // ✔️
 
@@ -69,19 +70,49 @@ async function getUserById(userId) {
     return response;
 }
 
-async function getUsers(userId) {
+async function getUsers() {
     const users = await User.find().lean();
 
     const response = users.map(user => removePassword(user));
 
     return response;
-}   
+}
+   
+async function addRoomToUser(userId, roomId) {
+    const newUser = await User.findByIdAndUpdate(
+        userId,
+        { $addToSet: { rooms: new mongoose.Types.ObjectId(roomId) } },
+        { new: true }
+    );
+
+    return newUser;
+}
+
+async function removeRoomFromUser(userId, roomId) {
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $pull: { rooms: new mongoose.Types.ObjectId(roomId) } },
+        { new: true }
+    );
+
+    return updatedUser;
+}
+
+async function getUserRooms(userId) {
+    const user = await User.findById(userId).populate({ path: 'rooms', model: "Room" }).lean();
+    
+    return user.rooms;
+}  
 
 const userService = { // ✔️
     register,
     login,
     getUserById,
-    getUsers
+    getUsers,
+    addRoomToUser,
+    removeRoomFromUser,
+    getUserRooms,
+    
 }
 
 export default userService;

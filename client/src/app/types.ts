@@ -16,8 +16,8 @@ export interface Product {
     | 'Groceries'
     | 'Music & Movies';
   _ownerId: string; 
-  _id: string,
-  savedBy: string[],
+  _id: string;
+  savedBy: string[];
 }
 
 export interface ProductDataInterface {
@@ -45,10 +45,26 @@ export interface User {
   username: string;
   userProducts: Product[];
   savedProducts: string[];
-  created_at: string;
-  updatedAt: string;
+  created_at?: string;
+  updatedAt?: string;
 }
 
 export interface AuthUser extends User { // ✔️
   accessToken: string;
+}
+
+export interface Message {
+  text: string;
+  sentBy: string;
+  created_at?: string;
+  updatedAt?: string;
+}
+export interface Room {
+  name: string | undefined;
+  owner: string | undefined;
+  messages: string[] | [];
+  users: (string | undefined)[];
+  _id?: string;
+  created_at?: string;
+  updatedAt?: string;
 }

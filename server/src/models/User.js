@@ -1,16 +1,20 @@
-import mongoose from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   userProducts: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'Product'
   }],
   savedProducts: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'Product'
+  }],
+  rooms: [{
+    type: Types.ObjectId,
+    ref: 'Room'
   }],
 }, { timestamps: { createdAt: 'created_at' } });
 
@@ -21,7 +25,7 @@ userSchema.pre("save", async function () {
   
 });
 
-const User = mongoose.model("User", userSchema);
+const User = model("User", userSchema);
 
 export default User;
 
