@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../user/user.service';
 import { AuthUser, Message } from '../../types';
 import { ReplaySubject } from 'rxjs';
+import { TimePipe } from "../../shared/pipes/time.pipe";
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [],
+  imports: [TimePipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
@@ -43,18 +44,42 @@ export class ChatComponent implements OnInit, OnDestroy {
     })
 
     this.message$.subscribe({
+
       next: (data) => {
-        this.messages.push(data);
+        const senderId = data.sentBy;
+    
+        if (senderId !== this.user?._id) {
+
+          this.userService.fetchProfile(senderId).subscribe({
+
+            next: (sender) => {
+
+              const updatedData = { ...data, sender };
+              this.messages.push(updatedData);
+              
+            },
+            error: (err) => {
+              console.error(`Error fetching sender profile:`, err);
+            }
+
+          });
+        } else {
+
+          const updatedData = { ...data, sender: this.user };
+          
+          this.messages.push(updatedData);
+
+        }
       },
       error: (err) => {
-        console.error('Error with ReplaySubject:', err);
+        console.error('Error occurred:', err);
       }
     });
 
   }
 
   sendMessage(message: string) {
-    this.socketService.emit('send message', { roomId: this.roomId, message, sender: this.user });
+    this.socketService.emit('send message', { roomId: this.roomId, message, senderId: this.user?._id });
   }
 
   ngOnDestroy(): void {

@@ -12,11 +12,13 @@ export class WebsocketService {
 
   constructor() {
 
-    const currentUrl = window.location.href;
-
+    if (!this.socket && typeof window !== 'undefined') {
+      const currentUrl = window.location.href;
+      
       this.socket = socketIo.connect(environment.API_LINK, {
         query: { currentUrl }
-      });
+      });      
+    }
 
    }
 

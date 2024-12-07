@@ -56,6 +56,7 @@ export interface AuthUser extends User { // ✔️
 export interface Message {
   text: string;
   sentBy: string;
+  sender: AuthUser | null;
   created_at?: string;
   updatedAt?: string;
 }

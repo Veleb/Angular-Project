@@ -34,12 +34,11 @@ export default function handleSocket(io) {
     });
 
     socket.on("send message", async (data) => {
-      const { roomId, message, sender } = data;
-
+      const { roomId, message, senderId } = data;
+      
       const sentMessage = await messageService.createMessage(
         message,
-        sender,
-        roomId
+        senderId,
       );
       
       await roomService.addMessageToRoom(sentMessage._id, roomId);

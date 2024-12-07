@@ -1,11 +1,11 @@
-<input type="text" #messageInput>
-<button (click)="sendMessage(messageInput.value)">send</button>
+<input type="text" #messageInput placeholder="Type your message">
+<button (click)="sendMessage(messageInput.value)">Send</button>
 
 <div class="chat-wrapper">
   @for (message of messages; track $index) {
     <div class="card-wrapper">
-      <small>{{ message.created_at }}</small>
-      <p>{{ message.sentBy }}: {{ message.text }}</p>
+      <small>{{ message.created_at | time }}</small>
+    <p>{{ message.sender?.username || "Anonymous" }}: {{ message.text }}</p>
     </div>
   }
 </div>
