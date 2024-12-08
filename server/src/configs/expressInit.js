@@ -5,6 +5,11 @@ import express from "express";
 import { authMiddleware } from '../middlewares/authMiddleware.js'
 import routes from "../routes.js";
 
+let FRONT_END_URL = process.env.FRONT_END_URL_LOCAL;
+
+if (process.env.PRODUCTION) {
+  FRONT_END_URL = process.env.FRONT_END_URL_PROD
+}
 
 export default function expressInit(app) {
   app.use(express.urlencoded({ extended: false }));
