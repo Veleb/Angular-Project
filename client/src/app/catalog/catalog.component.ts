@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../products/product.service';
 import { AuthUser, Product } from '../types';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 import { UserService } from '../user/user.service';
 
 @Component({

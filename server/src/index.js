@@ -11,19 +11,19 @@ const httpServer = createServer(app);
 
 let FRONT_END_URL = process.env.FRONT_END_URL_LOCAL;
 
-if (process.env.PRODUCTION) {
-  FRONT_END_URL = process.env.FRONT_END_URL_PROD
+if (process.env.PRODUCTION === true) {
+  FRONT_END_URL = process.env.FRONT_END_URL_PROD;
 }
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONT_END_URL,
+    origin: FRONT_END_URL,
     credentials: true,
   },
 });
 
 expressInit(app);
-mongooseInit()
+mongooseInit();
 handleSocket(io);
 
 httpServer.listen(3030, () =>

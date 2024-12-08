@@ -7,7 +7,7 @@ import routes from "../routes.js";
 
 let FRONT_END_URL = process.env.FRONT_END_URL_LOCAL;
 
-if (process.env.PRODUCTION) {
+if (process.env.PRODUCTION === true) {
   FRONT_END_URL = process.env.FRONT_END_URL_PROD
 }
 
@@ -16,7 +16,7 @@ export default function expressInit(app) {
   app.use(express.json());
   app.use(
     cors({
-      origin: process.env.FRONT_END_URL,
+      origin: FRONT_END_URL,
       credentials: true,
     })
   );

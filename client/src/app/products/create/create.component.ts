@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { environment } from '../../../environment';
+import { environment } from '../../../environments/environment';
 import { ProductService } from '../product.service';
-import { Product, ProductDataInterface } from '../../types';
+import { ProductDataInterface } from '../../types';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-create',
