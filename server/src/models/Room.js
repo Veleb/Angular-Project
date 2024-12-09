@@ -17,6 +17,10 @@ const roomSchema = new Schema({
       ref: "User"
     }
   ],
+  product : {
+    type: Types.ObjectId,
+    ref: "Product"
+  },
   owner: {
     type: Types.ObjectId,
     ref: "User",

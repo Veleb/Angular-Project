@@ -45,6 +45,7 @@ export interface User {
   username: string;
   userProducts: Product[];
   savedProducts: string[];
+  rooms: Room[] | undefined;
   created_at?: string;
   updatedAt?: string;
 }
@@ -54,6 +55,7 @@ export interface AuthUser extends User { // ✔️
 }
 
 export interface Message {
+  _id: string;
   text: string;
   sentBy: string;
   sender: AuthUser | null;
@@ -63,8 +65,9 @@ export interface Message {
 export interface Room {
   name: string | undefined;
   owner: string | undefined;
-  messages: string[] | [];
+  messages: Message[];
   users: (string | undefined)[];
+  product: string | undefined;
   _id?: string;
   created_at?: string;
   updatedAt?: string;

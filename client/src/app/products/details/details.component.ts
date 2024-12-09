@@ -60,18 +60,20 @@ export class DetailsComponent implements OnInit {
     }
     
     const userId: string  = this.user?._id;
+    const productId: string | undefined = product?._id;
+    
     const users: string[] = [ userId, ownerId ]; 
     const name: string | undefined = product?.name;
 
-    this.roomService.createRoom({ name, messages: [], users, owner: ownerId })
+    this.roomService.createRoom({ name, messages: [], users, owner: ownerId, product: productId })
     .subscribe({
 
       next: (room: Room) => {
         if (room._id && product?._id) {
 
-          this.router.navigate([`/chat/${product._id}/${room._id}`]);
+          this.router.navigate([`/chat/${productId}/${room._id}`]);
 
-        } else {
+        } else {  
           throw new Error(`Room or product ID is missing`);
         }
       },

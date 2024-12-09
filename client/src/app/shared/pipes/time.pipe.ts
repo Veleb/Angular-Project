@@ -8,7 +8,7 @@ import moment from 'moment';
 export class TimePipe implements PipeTransform {
 
   transform(date: string | undefined): string {
-    return moment(date).format("LLL");
+    return moment(date).format("LT");
   }
 
 }

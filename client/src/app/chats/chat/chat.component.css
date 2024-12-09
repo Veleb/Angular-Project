@@ -1,35 +1,134 @@
 .chat-wrapper {
   display: flex;
-  justify-content: flex-start;  
-  align-items: flex-start;  
-  flex-direction: column;
-  background-color: red;
-  padding: 20px;  
-  width: 100%; 
-  height: 100vh;  
-  overflow-y: auto;  
 }
 
-.card-wrapper {
-  min-height: 30px;
-  max-width: 200px;
-  background-color: cadetblue;
-  border: 2px solid white;
-  border-radius: 12px;
-  padding: 10px;  
-  margin-bottom: 10px;
-  word-wrap: break-word;   
+.sidebar {
+  width: 25%;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.chat-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-small {
-  font-size: 0.8em;
-  color: white;
-  margin-bottom: 5px;
+.message-wrapper {
+  padding: 30px;
+  background-color: #fafafa;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 100vh;
+  min-height: 100vh;
 }
 
-p {
-  margin: 0;
+.message {
+  position: relative;
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+.owner-buttons {
+  display: none;
+  position: absolute;
+  top: -35px;  
+  right: 0;
+  background-color: #333;
   color: white;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  gap: 5px;
+}
+
+.delete-button, .edit-button, .confirm-button {
+  padding: 5px 10px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid white;
+  transition: background-color 0.2s;
+}
+
+.delete-button {
+  background-color: #CE4760;
+}
+
+.edit-button {
+  background-color: #6c757d;
+}
+
+.confirm-button {
+  background-color: #28a745;
+}
+
+.edit-input {
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid white;
+  width: 100px;
+}
+
+.message.sent {
+  align-self: flex-end;
+  background-color: #d1e7dd;
+}
+
+.message.received {
+  align-self: flex-start;
+  background-color: #e2e3e5;
+}
+
+.input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.input-area input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.input-area button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 275px; 
+  overflow: hidden;
+}
+
+.chat-item:hover {
+  background-color: #f0f0f0;
 }

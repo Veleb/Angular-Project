@@ -63,7 +63,9 @@ async function generateResponse(user) {
 }
 
 async function getUserById(userId) {
-    const user = await User.findById(userId).lean();
+    const user = await User.findById(userId)
+    .populate('rooms')
+    .lean();
 
     const response = removePassword(user);
 
@@ -84,19 +86,19 @@ async function addRoomToUser(userId, roomId) {
         { $addToSet: { rooms: new mongoose.Types.ObjectId(roomId) } },
         { new: true }
     );
-
+    
     return newUser;
 }
 
-async function removeRoomFromUser(userId, roomId) {
-    const updatedUser = await User.findByIdAndUpdate(
-        userId,
-        { $pull: { rooms: new mongoose.Types.ObjectId(roomId) } },
-        { new: true }
-    );
+// async function removeRoomFromUser(userId, roomId) {
+//     const updatedUser = await User.findByIdAndUpdate(
+//         userId,
+//         { $pull: { rooms: new mongoose.Types.ObjectId(roomId) } },
+//         { new: true }
+//     );
 
-    return updatedUser;
-}
+//     return updatedUser;
+// }
 
 async function getUserRooms(userId) {
     const user = await User.findById(userId).populate({ path: 'rooms', model: "Room" }).lean();
@@ -110,7 +112,7 @@ const userService = { // ✔️
     getUserById,
     getUsers,
     addRoomToUser,
-    removeRoomFromUser,
+    // removeRoomFromUser,
     getUserRooms,
     
 }

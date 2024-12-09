@@ -35,7 +35,7 @@ export class UserService implements OnDestroy {
   }
 
   get getUser(): AuthUser | null {
-    return this.user;
+    return this.storageService.getItem('user');
   }
 
   get getSavedProducts(): string[] | undefined {

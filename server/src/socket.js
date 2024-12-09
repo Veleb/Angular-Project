@@ -5,7 +5,6 @@ import userService from "./services/userService.js";
 export default function handleSocket(io) {
 
   io.on("connection", (socket) => {
-
     const currentUrl = socket.handshake.query.currentUrl;
       
     if (!currentUrl.includes('/chat')) {
@@ -17,19 +16,17 @@ export default function handleSocket(io) {
       const { roomId, userId } = data;
 
       socket.join(roomId);
-
+      
       await userService.addRoomToUser(userId, roomId);
 
       io.to(roomId).emit('room joined', roomId);
     });
 
     socket.on("leave room", async (data) => {
-      const { roomId, userId } = data;
+      const { roomId } = data;
 
       socket.leave(roomId);
-
-      await userService.removeRoomFromUser(userId, roomId);
-
+      
       io.to(roomId).emit('room left', roomId);
     });
 
