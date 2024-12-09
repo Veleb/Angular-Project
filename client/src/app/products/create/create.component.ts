@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { ProductService } from '../product.service';
-import { ProductDataInterface } from '../../types';
+import { Category, ProductDataInterface } from '../../types';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-create',
@@ -16,18 +16,32 @@ export class CreateComponent {
   constructor(private productService: ProductService, private router: Router) {}
 
   categories = environment.categories;
-
+  
   form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.minLength(6), Validators.pattern('[a-zA-Z0-9\-]+') ]),
-    price: new FormControl(0, [Validators.required, Validators.min(0.01)]),
-    quantity: new FormControl(0, [Validators.required, Validators.min(1)]),
-    image: new FormControl('', [Validators.required, Validators.pattern('^(https?:\/\/.*\.(?:jpg|jpeg|png|gif|bmp|webp))$')]),
-    description: new FormControl('', [
+    name: new FormControl<string>('', [
+      Validators.required, 
+      Validators.maxLength(255), 
+      Validators.minLength(6), 
+      Validators.pattern('[a-zA-Z0-9\-]+')
+    ]),
+    price: new FormControl<number>(0, [
+      Validators.required, 
+      Validators.min(0.01)
+    ]),
+    quantity: new FormControl<number>(0, [
+      Validators.required, 
+      Validators.min(1)
+    ]),
+    image: new FormControl<string>('', [
+      Validators.required, 
+      Validators.pattern('^(https?:\/\/.*\.(?:jpg|jpeg|png|gif|bmp|webp))$')
+    ]),
+    description: new FormControl<string>('', [
       Validators.required,
       Validators.minLength(20),
       Validators.maxLength(300),
     ]),
-    category: new FormControl(null, [Validators.required]),
+    category: new FormControl<Category | null>(null, [Validators.required]),
   });
   
   formTextGetter(control: string) {

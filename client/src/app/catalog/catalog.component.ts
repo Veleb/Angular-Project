@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../products/product.service';
-import { AuthUser, Product } from '../types';
+import { AuthUser, Category, Product } from '../types';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
 import { environment } from '../../environments/environment';
 import { UserService } from '../user/user.service';
@@ -69,8 +69,8 @@ export class CatalogComponent implements OnInit {
       this.showSavedProducts();
     } else {
       if (this.selectedCategories.length !== 0) {
-        this.filteredProducts = this.products.filter((product) =>
-          this.selectedCategories.includes(product.category)
+        this.filteredProducts = this.products.filter((product: Product) =>
+          this.selectedCategories.includes(product.category || '')
         );
       } else {
         this.filteredProducts = [...this.products];

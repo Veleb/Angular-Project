@@ -4,40 +4,32 @@ export interface Product {
   quantity: number;
   image: string; 
   description: string;
-  category: 
-    | 'Electronics'
-    | 'Fashion'
-    | 'Home & Living'
-    | 'Books'
-    | 'Toys'
-    | 'Sports & Outdoors'
-    | 'Health & Beauty'
-    | 'Automotive'
-    | 'Groceries'
-    | 'Music & Movies';
+  category: Category;
   _ownerId: string; 
   _id: string;
   savedBy: string[];
 }
 
+export type Category = 
+  | "Electronics"
+  | "Fashion"
+  | "Home & Living"
+  | "Books"
+  | "Toys"
+  | "Sports & Outdoors"
+  | "Health & Beauty"
+  | "Automotive"
+  | "Groceries"
+  | "Music & Movies"
+  | undefined
+  | null;
 export interface ProductDataInterface {
   name: string;          
   price: number;          
   quantity: number;       
   image: string;          
   description: string;    
-  category: 
-    | 'Electronics'
-    | 'Fashion'
-    | 'Home & Living'
-    | 'Books'
-    | 'Toys'
-    | 'Sports & Outdoors'
-    | 'Health & Beauty'
-    | 'Automotive'
-    | 'Groceries'
-    | 'Music & Movies'
-    | null;
+  category: Category | null;
 }
 
 export interface User {

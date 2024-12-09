@@ -14,7 +14,7 @@ export class ProductService {
     return this.http.get<Product[]>(`/api/products`);
   }
 
-  getProductById(productId: string): Observable<Product> {
+  getProductById(productId: string | null): Observable<Product> {
     return this.http.get<Product>(`/api/products/${productId}`);
   }
 
@@ -24,6 +24,10 @@ export class ProductService {
   
   createProduct(productData: ProductDataInterface): Observable<Product> {
     return this.http.post<Product>('/api/products', productData);
+  }
+
+  updateProduct(productData: ProductDataInterface, productId: string | undefined): Observable<Product> {
+    return this.http.put<Product>(`/api/products/${productId}`, productData);
   }
 
   saveProduct(productId: string): Observable<Product> {

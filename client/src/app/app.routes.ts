@@ -31,7 +31,7 @@ export const routes: Routes = [
   ]},
 
   { path: 'chat', children: [
-    { path: ':productId/:roomId', component: ChatComponent }
+    { path: ':productId/:roomId', component: ChatComponent, canActivate: [authGuard] }
   ]},
 
   { path: "register", component: RegisterComponent, canActivate: [guestGuard] },

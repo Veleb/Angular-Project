@@ -200,7 +200,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
-  sendMessage(message: string) {
+  sendMessage(messageInput: HTMLInputElement) {
+
+    const message = messageInput.value;
+
+    messageInput.value = '';
+
     if (this.user) {
       this.socketService.emit('send message', { roomId: this.roomId, message, senderId: this.user._id });
     } else {
