@@ -11,7 +11,6 @@ export default function handleSocket(io) {
       socket.disconnect(true);  
       return;
     }
-
     socket.on("join room", async (data) => {
       const { roomId, userId } = data;
 

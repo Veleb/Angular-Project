@@ -1,6 +1,26 @@
-@if (isOwnProfile) {
+@if (isOwnProfile && user) {
   <div>
-    <p>Welcome back, {{ user?.username }}</p>
+    <p>Welcome back, {{ user.username }}</p>
+
+    <div class="chat-wrapper">
+        <h2 class="header">{{ user.username }}'s chats</h2>
+      @if (user.rooms?.length === 0) {
+
+        <h1>No chats found!</h1>
+
+      } @else {
+
+          @for (room of user.rooms; track $index) {
+            <div class="chat-item">
+              <h2 [routerLink]=" '/chat/' + room.product + '/' + room._id ">{{room.name}}</h2>
+              <button (click)="leaveRoom(room._id)" class="leave-button">Leave</button>
+            </div>
+          }
+      }
+
+    </div>
+    
+
     <button (click)="onLogout()" class="logout-button">Logout</button>
   </div>
 } @else {

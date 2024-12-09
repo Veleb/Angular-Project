@@ -88,6 +88,10 @@ export class UserService implements OnDestroy {
     return this.http.get<User[]>(`/api/users/profiles`);
   }
 
+  removeRoom(roomId: string | undefined) {
+    return this.http.delete(`/api/users/${roomId}`);
+  }
+
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
   }

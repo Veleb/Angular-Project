@@ -90,6 +90,22 @@ userController.get('/profile/:profileId', async (req, res) => { // ✔️
 
 })
 
+userController.delete('/:roomId', async (req, res) => {
+
+    const roomId = req.params.roomId;
+    const userId = req.user._id;
+  
+    try {
+  
+      const response = await userService.removeRoomFromUser(userId, roomId)
+      
+      res.status(200).json(response);
+  
+    } catch (err) {
+      res.status(400).json({ message: `Error deleting rooms: ${err}` });
+    }
+  });
+
 export default userController;
 
 // ✔️

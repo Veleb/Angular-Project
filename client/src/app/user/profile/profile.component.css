@@ -12,3 +12,48 @@
 .logout-button:hover {
   cursor: pointer;
 }
+
+.header {
+  font-weight: 800;
+}
+
+.chat-wrapper {
+  min-height: 300px;
+  width: 300px;
+  background-color: bisque;
+  border-radius: 8px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chat-item {
+  background-color: gainsboro;
+  width: 100%;
+  text-align: center; 
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px; 
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.chat-item:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 1px 1px gray;
+}
+
+.leave-button {
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid black;
+  min-width: 75px;
+}
+
+.leave-button:hover {
+  cursor: pointer;
+}
