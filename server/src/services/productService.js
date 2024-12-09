@@ -1,12 +1,34 @@
 import Product from "../models/product.js";
-import User from '../models/User.js';
-import { removePassword } from '../utils/auth.js';
+import User from "../models/User.js";
+import { removePassword } from "../utils/auth.js";
 
-const getAll = () => Product.find();
-const getOne = (productId) => Product.findById(productId);
-const create = (productData, userId) => Product.create({ ...productData, _ownerId: userId });
-const remove = (productId) => Product.findByIdAndDelete(productId);
-const update = (productId, productData) => Product.findByIdAndUpdate(productId, productData);
+const getAll = async () => {
+  return await Product.find();
+};
+
+const getOne = async (productId) => {
+  return await Product.findById(productId);
+};
+
+const create = async (productData, userId) => {
+  const product = await Product.create({ ...productData, _ownerId: userId });
+  
+  await User.findByIdAndUpdate(
+    userId,
+    { $addToSet: { userProducts: product._id } },
+    { new: true }
+  );
+
+  return product;
+};
+
+const remove = async (productId) => {
+  return await Product.findByIdAndDelete(productId);
+};
+
+const update = async (productId, productData) => {
+  return await Product.findByIdAndUpdate(productId, productData, { new: true });
+};
 
 const saveProduct = async (productId, userId) => {
   const newUser = await User.findByIdAndUpdate(
@@ -15,16 +37,14 @@ const saveProduct = async (productId, userId) => {
     { new: true }
   ).lean();
 
-  const newProduct= await Product.findByIdAndUpdate(
+  const newProduct = await Product.findByIdAndUpdate(
     productId, 
     { $addToSet: { savedBy: userId } },
     { new: true }
   ).lean();
 
-  const response = { newProduct, user: removePassword(newUser) }
-
-  return response;
-}
+  return { newProduct, user: removePassword(newUser) };
+};
 
 const unsaveProduct = async (productId, userId) => {
   const newUser = await User.findByIdAndUpdate(
@@ -38,11 +58,22 @@ const unsaveProduct = async (productId, userId) => {
     { $pull: { savedBy: userId } },
     { new: true }
   ).lean();
-  
-  const response = { newProduct, user: removePassword(newUser) }
 
-  return response;
-}
+  return { newProduct, user: removePassword(newUser) };
+};
+
+const getSavedProducts = async (userId) => {
+  try {
+    const user = await User.findById(userId)
+      .populate({ path: 'savedProducts', model: "Product" })
+      .lean();
+    
+    return user.savedProducts || [];
+  } catch (err) {
+    console.error("Error fetching saved products:", err);
+    throw err;
+  }
+};
 
 const productService = {
   getAll,
@@ -52,7 +83,8 @@ const productService = {
   update,
   saveProduct,
   unsaveProduct,
+  getSavedProducts,
 
-}
+};
 
 export default productService;

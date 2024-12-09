@@ -13,6 +13,18 @@
         <label [htmlFor]="category" class="filter-label">{{ category }}</label>
       </div>
       }
+      @if ((user?.savedProducts || []).length > 0) {
+        <div class="filter">
+          <input
+            id="saved"
+            class="filter-input"
+            type="checkbox"
+            value="saved"
+            (change)="onToggleSavedProducts($event)"
+          />
+          <label for="saved" class="filter-label">Saved</label>
+        </div>
+      }
     </div>
   </div>
 

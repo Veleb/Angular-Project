@@ -34,4 +34,8 @@ export class ProductService {
     return this.http.delete<Product>(`/api/products/save/${productId}`, {});
   }
 
+  getUserSavedProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`/api/products/saved`);
+  }
+
 }

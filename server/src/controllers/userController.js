@@ -47,7 +47,7 @@ userController.get('/profile', async (req, res) => {
     try {
         if (token && userId) {
             const user = await userService.getUserById(userId);
-
+            
             if (user) {
                 return res.status(200).json(user);
             }

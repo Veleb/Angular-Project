@@ -14,10 +14,11 @@ import { UserService } from '../user/user.service';
 })
 export class CatalogComponent implements OnInit {
   products: Product[] = [];
-  selectedCategories: String[] = [];
+  selectedCategories: string[] = [];
   filteredProducts: Product[] = [];
 
   user: AuthUser | null = null;
+  showSavedOnly: boolean = false;
 
   constructor(private productService: ProductService, private userService: UserService) {}
 
@@ -32,7 +33,12 @@ export class CatalogComponent implements OnInit {
       }
     });
 
-    this.user = this.userService.getUser
+    this.userService.getProfile().subscribe({
+      next: (currentUser: AuthUser | null) => {
+        this.user = currentUser;
+      },
+      error: (err) => console.error('Error fetching user profile:', err),
+    });
   }
 
   categories = environment.categories;
@@ -48,12 +54,42 @@ export class CatalogComponent implements OnInit {
       );
     }
 
-    if (this.selectedCategories.length !== 0) {
-      this.filteredProducts = this.products.filter((product) =>
-        this.selectedCategories.includes(product.category)
-      );
+    this.applyFilters();
+  }
+
+  onToggleSavedProducts(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.showSavedOnly = target.checked;
+
+    this.applyFilters();
+  }
+
+  applyFilters(): void {
+    if (this.showSavedOnly) {
+      this.showSavedProducts();
     } else {
-      this.filteredProducts = [...this.products];
+      if (this.selectedCategories.length !== 0) {
+        this.filteredProducts = this.products.filter((product) =>
+          this.selectedCategories.includes(product.category)
+        );
+      } else {
+        this.filteredProducts = [...this.products];
+      }
     }
+  }
+
+  showSavedProducts(): void {
+    this.productService.getUserSavedProducts().subscribe({
+      next: (data: Product[]) => {
+        if (data.length > 0) {
+          this.filteredProducts = data;
+        } else {
+          this.filteredProducts = [];
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching saved products:', err);
+      },
+    });
   }
 }

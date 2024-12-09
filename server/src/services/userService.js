@@ -66,7 +66,7 @@ async function getUserById(userId) {
     const user = await User.findById(userId)
     .populate('rooms')
     .lean();
-
+    
     const response = removePassword(user);
 
     return response;
