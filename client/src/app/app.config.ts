@@ -18,7 +18,12 @@ export const appConfig: ApplicationConfig = {
       
     ),
     provideAnimations(),
-    provideToastr(),
+    provideToastr({
+      maxOpened: 3,
+      closeButton: true, 
+      progressBar: true,
+      preventDuplicates: true,
+    }),
     provideClientHydration()]
 
 };

@@ -64,9 +64,10 @@ productController.post("/", async (req, res) => {
 
 productController.delete("/:productId", async (req, res) => {
   const { productId } = req.params;
+  const userId = req.user._id;
 
   try {
-    const response = await productService.remove(productId);
+    const response = await productService.remove(productId, userId);
 
     if (!response) {
       return res.status(404).json({ message: "Product not found" });

@@ -59,11 +59,10 @@ export class ProfileComponent implements OnInit {
     this.userService.logout().subscribe({
       next: () => {
         this.toastr.success(`Successful logout!`, `Success`);
-      setTimeout(() => {
         this.router.navigate(['/login']);
-      }, 1000);
       },
       error: (err) => {
+        this.toastr.error(`Error occurred while logging out!`, `Error`);
         console.error('Error during logout', err);
       },
     });
@@ -73,6 +72,7 @@ export class ProfileComponent implements OnInit {
     if (!roomId || !this.user) return;
   
     this.userService.removeRoom(roomId).pipe(
+
       switchMap((data: any) => {
         if (!data.rooms || data.rooms.length === 0) {
           return of([]);
@@ -101,6 +101,8 @@ export class ProfileComponent implements OnInit {
         return throwError(err);
       })
     ).subscribe();
+
+    this.toastr.success(`Successfully left the chat!`, `Success!`)
   }
 
 }

@@ -22,8 +22,19 @@ const create = async (productData, userId) => {
   return product;
 };
 
-const remove = async (productId) => {
-  return await Product.findByIdAndDelete(productId);
+const remove = async (productId, userId) => {
+  try {
+    await Product.findByIdAndDelete(productId);
+    
+    return await User.findByIdAndUpdate(
+      userId, 
+      { $pull: { userProducts: productId } },
+      { new: true } 
+    );
+
+  } catch (err) {
+    console.error('Error removing product from user:', err);
+  }
 };
 
 const update = async (productId, productData) => {
@@ -67,8 +78,12 @@ const getSavedProducts = async (userId) => {
     const user = await User.findById(userId)
       .populate({ path: 'savedProducts', model: "Product" })
       .lean();
-    
-    return user.savedProducts || [];
+
+    const sortedProducts = (user.savedProducts || []).sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    return sortedProducts;
   } catch (err) {
     console.error("Error fetching saved products:", err);
     throw err;

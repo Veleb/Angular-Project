@@ -12,6 +12,7 @@ import { authGuard } from './guards/auth.guard';
 import { ownerGuard } from './guards/owner.guard';
 import { guestGuard } from './guards/guest.guard';
 import { ChatComponent } from './chats/chat/chat.component';
+import { isChatUserGuard } from './guards/is-chat-user.guard';
 
 export const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -31,7 +32,7 @@ export const routes: Routes = [
   ]},
 
   { path: 'chat', children: [
-    { path: ':productId/:roomId', component: ChatComponent, canActivate: [authGuard] }
+    { path: ':productId/:roomId', component: ChatComponent, canActivate: [authGuard, isChatUserGuard] }
   ]},
 
   { path: "register", component: RegisterComponent, canActivate: [guestGuard] },

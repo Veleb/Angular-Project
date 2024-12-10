@@ -8,6 +8,7 @@ import { TimePipe } from "../../shared/pipes/time.pipe";
 import { RoomService } from '../room.service';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { switchMap, take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chat',
@@ -41,7 +42,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     private socketService: WebsocketService,
     private route: ActivatedRoute,
     private userService: UserService,
-    private roomService: RoomService
+    private roomService: RoomService,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -188,11 +190,12 @@ export class ChatComponent implements OnInit, OnDestroy {
           next: () => {
             this.isEditing = !this.isEditing;
             this.room!.name = chatName;
+            this.toastr.success('Successfully updated the room name!', `Error Occurred`);
           },
           error: (err) => {
             this.isEditing = !this.isEditing;
             console.error('Error updating room name:', err);
-            alert('Failed to update the room name. Please try again.');
+            this.toastr.error('Failed to update the room name!', `Error Occurred`);
           }
         });
       },

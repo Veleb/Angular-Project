@@ -4,6 +4,7 @@ import { RouterLink, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { UsernameDirective } from '../../directives/username.directive';
 import { PasswordDirective } from '../../directives/password.directive';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { PasswordDirective } from '../../directives/password.directive';
 })
 export class LoginComponent {
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {}
 
   passwordVisible: boolean = false;
 
@@ -25,6 +26,7 @@ export class LoginComponent {
 
     this.userService.login(username, password).subscribe({
       next: (response) => {
+        this.toastr.success(`Successful Login!`, `Success`);
         this.router.navigate(['catalog']);
       },
       error: (error) => {

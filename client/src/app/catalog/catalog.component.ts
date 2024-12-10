@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../products/product.service';
-import { AuthUser, Category, Product } from '../types';
+import { AuthUser, Product } from '../types';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
 import { environment } from '../../environments/environment';
 import { UserService } from '../user/user.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
@@ -23,24 +24,21 @@ export class CatalogComponent implements OnInit {
   constructor(private productService: ProductService, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe({
-      next: (data) => {
-        this.products = data;
-        this.filteredProducts = [...data]; 
+    forkJoin({
+      products: this.productService.getProducts(),
+      user: this.userService.getProfile()
+    }).subscribe({
+      next: (results) => {
+        this.products = results.products;
+        this.filteredProducts = [...results.products];
+        this.user = results.user;
       },
       error: (error) => {
-        console.error(`Error fetching products: ${error}`);
+        console.error('Error fetching data:', error);
       }
     });
-
-    this.userService.getProfile().subscribe({
-      next: (currentUser: AuthUser | null) => {
-        this.user = currentUser;
-      },
-      error: (err) => console.error('Error fetching user profile:', err),
-    });
   }
-
+      
   categories = environment.categories;
 
   onCategoryChange(event: Event): void {
@@ -81,11 +79,12 @@ export class CatalogComponent implements OnInit {
   showSavedProducts(): void {
     this.productService.getUserSavedProducts().subscribe({
       next: (data: Product[]) => {
+        this.filteredProducts = [];
+
         if (data.length > 0) {
           this.filteredProducts = data;
-        } else {
-          this.filteredProducts = [];
         }
+        
       },
       error: (err) => {
         console.error('Error fetching saved products:', err);
