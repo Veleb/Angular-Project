@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 import { UsernameDirective } from '../../directives/username.directive';
 import { PasswordDirective } from '../../directives/password.directive';
 import { RepasswordDirective } from '../../directives/repassword.directive';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ import { RepasswordDirective } from '../../directives/repassword.directive';
 })
 export class RegisterComponent {
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {}
 
   passwordVisible: boolean = false;
   rePasswordVisible: boolean = false;
@@ -26,17 +27,18 @@ export class RegisterComponent {
     const { username, password, repass } = formData;
     
     if (password !== repass) {
-      alert('Passwords do not match!');
+      this.toastr.error("Passwords don't match!", "Error!");
       return;
     }
 
     this.userService.register(username, password).subscribe({
       next: (response) => {
-        // ADD CONFIRMATION TOAsT
+        this.toastr.success("Successful register!", "Success!")
         this.router.navigate(['catalog']);
       },
       error: (error) => {
-        console.error(`Error registering user: ${{error}}`);
+        console.error(`Error registering user: ${error}`);
+        this.toastr.error(`Error registering user`, `Error!`);
       }
     })
 

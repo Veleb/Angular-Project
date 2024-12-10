@@ -4,6 +4,7 @@ import { UserService } from '../user.service';
 import { AuthUser, Room, User } from '../../types';
 import { RoomService } from '../../chats/room.service';
 import { catchError, forkJoin, map, of, switchMap, tap, throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,7 @@ export class ProfileComponent implements OnInit {
     private roomService: RoomService,
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +58,10 @@ export class ProfileComponent implements OnInit {
   onLogout(): void {
     this.userService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/login']); 
+        this.toastr.success(`Successful logout!`, `Success`);
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 1000);
       },
       error: (err) => {
         console.error('Error during logout', err);
