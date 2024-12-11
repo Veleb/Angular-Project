@@ -8,7 +8,7 @@
 
     <div class="data-group">
       <h2>Price: ${{ product?.price }}</h2>
-      <h2>Qnt: {{ product?.quantity }}</h2>
+      <h2>Quantity: {{ product?.quantity }}</h2>
       <h2>Description: {{ product?.description }}</h2>
     </div>
     <div class="buttons-wrapper">
@@ -22,6 +22,12 @@
         <button (click)="startChat(product, product?._ownerId)" class="button chat-button"><i class="fa-regular fa-comment"></i></button>
       }
 
+    </div>
+
+    <div class="featured-products">
+      @for (product of featuredProducts; track $index) {
+        <app-product-card class="featured-product" [product]="product" />
+      }
     </div>
 
   </div>

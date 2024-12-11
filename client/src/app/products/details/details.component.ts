@@ -4,11 +4,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthUser, Product, Room } from '../../types';
 import { UserService } from '../../user/user.service';
 import { RoomService } from '../../chats/room.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [ RouterLink ],
+  imports: [ RouterLink, ProductCardComponent ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
@@ -16,6 +17,9 @@ import { RoomService } from '../../chats/room.service';
 export class DetailsComponent implements OnInit {
   product: Product | null = null;
   user: AuthUser | null = null;
+  owner: AuthUser | null = null;
+  featuredProducts: Product[] | null = null;
+
 
   constructor(
     private productService: ProductService,
@@ -26,22 +30,36 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.route.paramMap.subscribe(params => {
-
       const productId = params.get('id')
-
-        if (productId) {
-          this.productService.getProductById(productId).subscribe({
-            next: (productData: Product) => {
-              this.product = productData; 
-            },
-            error: (err) => console.error(`Error fetching product by id: ${err}`)
-          });
-        }
-
-      });
-
+  
+      if (productId) {
+        this.productService.getProductById(productId).subscribe({
+          next: (productData: Product) => {
+            this.product = productData; 
+            
+            if (this.product?._ownerId) {
+              this.userService.fetchProfile(this.product._ownerId).subscribe({
+                next: (data) => {
+                  this.owner = data;
+                  
+                  const filteredProducts = this.owner.userProducts.filter(
+                    product => product._id !== this.product?._id
+                  );
+                  
+                  this.featuredProducts = filteredProducts.slice(0, 2);
+                },
+                error: (error) => {
+                  console.error('Error fetching owner profile', error);
+                }
+              });
+            }
+          },
+          error: (err) => console.error(`Error fetching product by id: ${err}`)
+        });
+      }
+    });
+  
     this.user = this.userService.getUser;
   }
 

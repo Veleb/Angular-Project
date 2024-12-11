@@ -1,0 +1,48 @@
+.not-found-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ee6c4d;
+  font-family: 'Arial', sans-serif;
+}
+
+.not-found-content {
+  text-align: center;
+  color: #fff;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.not-found-title {
+  font-size: 100px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.not-found-message {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.home-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #ff6f61;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #e04e3a;
+}
+
+.home-button:focus {
+  outline: none;
+}

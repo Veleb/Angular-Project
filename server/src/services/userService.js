@@ -65,6 +65,7 @@ async function generateResponse(user) {
 async function getUserById(userId) {
     const user = await User.findById(userId)
     .populate('rooms')
+    .populate('userProducts')
     .lean();
     
     const response = removePassword(user);

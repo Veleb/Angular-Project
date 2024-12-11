@@ -80,7 +80,7 @@ export class UserService implements OnDestroy {
     );
   }
 
-  fetchProfile(userId: string): Observable<AuthUser> {
+  fetchProfile(userId: string | undefined): Observable<AuthUser> {
     return this.http.get<AuthUser>(`/api/users/profile/${userId}`);
   }
 
