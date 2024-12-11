@@ -1,0 +1,27 @@
+<footer class="footer-wrapper">
+  <div class="footer-top">
+    <div class="quick-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/catalog">Browse Products</a></li>
+      </ul>
+    </div>
+    <div class="social-media">
+      <h4>Follow Us</h4>
+      <a routerLink="#"><i class="fab fa-facebook"></i></a>
+      <a routerLink="#"><i class="fab fa-instagram"></i></a>
+      <a routerLink="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <div class="newsletter">
+      <h4>Stay Updated</h4>
+      <form>
+        <input #emailInput type="email" placeholder="Your email">
+        <button (click)="onRegister(emailInput)" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 BUYnSELL. All rights reserved.</p>
+  </div>
+</footer>

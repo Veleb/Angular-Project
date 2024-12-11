@@ -21,9 +21,13 @@ productController.get("/saved", async (req, res) => {
 });
 
 productController.get("/", async (req, res) => {
+  const limit = req.query['limit'];
+
   try {
-    const response = await productService.getAll();
+
+    const response = await productService.getAll(limit);
     res.json(response);
+
   } catch ({ message }) {
     res.status(400).json({ message });
   }

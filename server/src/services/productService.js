@@ -2,8 +2,8 @@ import Product from "../models/product.js";
 import User from "../models/User.js";
 import { removePassword } from "../utils/auth.js";
 
-const getAll = async () => {
-  return await Product.find();
+const getAll = async (limit) => {
+  return await Product.find().limit(limit);
 };
 
 const getOne = async (productId) => {

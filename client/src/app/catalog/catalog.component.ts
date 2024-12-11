@@ -25,7 +25,7 @@ export class CatalogComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      products: this.productService.getProducts(),
+      products: this.productService.getProducts(0),
       user: this.userService.getProfile()
     }).subscribe({
       next: (results) => {

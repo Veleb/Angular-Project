@@ -1,7 +1,76 @@
 <div class="home-wrapper">
-  <section class="hero-section">
-    <h1 class="welcome-msg">Welcome to BUYnSELL!</h1>
-    <button routerLink="/catalog" class="cta-button">Explore Products</button>
-    <button routerLink="/login" class="cta-button">Explore Products</button>
+
+  <section class="hero-wrapper">
+
+    <img class="background-image" src="https://images.pexels.com/photos/1002222/pexels-photo-1002222.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background image of a marketplace.">
+
+    <h1 class="welcome-message">Welcome to BUYnSELL!</h1>
+    <h2 class="description">BUYnSELL is the perfect place to, well... BUY and SELL things.</h2>
+    <button routerLink="/catalog" class="cta-button">Browse Products</button>
+
   </section>
+
+  <section class="promotion-wrapper">
+    
+    <h2 class="header">Take a look at some listings</h2>
+      
+    <hr>
+
+    <div class="products-wrapper">
+
+     @for (product of products; track $index) {
+      <app-product-card [product]="product" />
+     }
+
+    </div>
+
+  </section>
+
+  <section class="overview-wrapper">
+
+  <h2 class="header">How it works</h2>
+
+  <hr class="white">
+
+   <div class="box-wrapper">
+      <div class="box">
+
+          <i class="fa-regular fa-eye eye-icon"></i>
+
+          <h2 class="box-description">
+            Click this button to access the details page of a certain product.
+          </h2>
+
+      </div>
+      <div class="box">
+
+        <i class="fa-regular fa-bookmark save-icon"></i>
+
+          <h2 class="box-description">
+            Click this button to save a certain product.
+          </h2>
+
+      </div>
+      <div class="box">
+
+        <i class="fa-regular fa-comment chat-icon"></i>
+
+        <h2 class="box-description">
+          Click this button to start a chat with the owner of a certain product.
+        </h2>
+
+      </div>
+      <div class="box">
+
+        <i class="fa-solid fa-user user-icon"></i>
+
+        <h2 class="box-description">
+          Click this button to see the profile of the owner of a certain product.
+        </h2>
+
+      </div>
+   </div>
+
+  </section>
+
 </div>

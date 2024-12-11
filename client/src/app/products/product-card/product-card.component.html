@@ -1,21 +1,39 @@
 <div class="product-card-wrapper">
   <img [src]="product.image" alt="Product Image">
 
-  <div class="user-card">
-    <!-- <img [src]="owner?.profilePicture" alt=""> -->
-    <i class="fa-solid fa-user user-icon"></i> <!-- CHANGE TO JUST RESIZE THE PHOTO AND MAKE THE BACKGROUND BLACKER -->
-    @if (isOwner) {
-      <p class="user-card-username" [routerLink]="'/profile/' + owner?._id">{{ owner?.username }} - OWNER</p>
-    } @else {
-      <p class="user-card-username" [routerLink]="'/profile/' + owner?._id">{{ owner?.username }}</p>
-    }
-  </div>
+  <div class="product-information">
 
-  <h2>{{ product.name }}</h2>
-  <p>${{ product.price }}</p>
-  <button class="eye-button" [routerLink]="'/product/' + product._id" ><i class="fa-regular fa-eye"></i></button>
-  
-  @if (user?._id !== product._ownerId) {
-    <button (click)="favoriteProduct(product._id)" class="saved-button"><i [class]="isSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark' "></i></button>
-  }
+    <div class="product-data-wrapper">
+
+      <div class="user-card">
+        <i class="fa-solid fa-user user-icon"></i>
+        @if (isOwner) {
+          <div class="user-data">
+
+            <p class="user-card-username" [routerLink]="'/profile/' + owner?._id">{{ owner?.username }}</p>
+            <i class="fa-solid fa-star star-icon"></i>
+
+          </div>
+        } @else {
+          <p class="user-card-username" [routerLink]="'/profile/' + owner?._id">{{ owner?.username }}</p>
+        }
+      </div>
+    
+      <div class="product-data">
+        <h2>{{ product.name }}</h2>
+        <h3 class="product-price">${{ product.price }}</h3>
+      </div>
+
+    </div>
+
+    <div class="buttons-wrapper">
+
+      <button class="eye-button" [routerLink]="'/product/' + product._id" ><i class="fa-regular fa-eye"></i></button>
+      
+      @if (user?._id !== product._ownerId) {
+        <button (click)="favoriteProduct(product._id)" class="saved-button"><i [class]="isSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark' "></i></button>
+      }
+    </div>
+
+  </div>
 </div>
