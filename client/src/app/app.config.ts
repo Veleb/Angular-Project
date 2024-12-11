@@ -23,6 +23,7 @@ export const appConfig: ApplicationConfig = {
       closeButton: true, 
       progressBar: true,
       preventDuplicates: true,
+      positionClass: 'toast-under-navbar',
     }),
     provideClientHydration()]
 
