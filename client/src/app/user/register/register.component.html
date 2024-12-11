@@ -1,126 +1,130 @@
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <h2>Welcome to BUYnSELL! Create an account!</h2>
-
-  <div class="form-group">
-    <input 
-      [class]="
-         ( ( username.touched && username?.errors?.['required'] )
-         || ( username.touched && username?.errors?.['minlength'] )
-         || ( username.touched && username?.errors?.['maxlength'] )
-         || ( username.touched && username?.errors?.['usernameValidator'] ))
-          ? 'error' 
-          : 'success' "
+<div class="register-wrapper">
+  <div class="glass-wrapper">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <h2>Welcome to BUYnSELL! Create an account!</h2>
+    
+      <div class="form-group">
+        <input 
+          [class]="
+             ( ( username.touched && username?.errors?.['required'] )
+             || ( username.touched && username?.errors?.['minlength'] )
+             || ( username.touched && username?.errors?.['maxlength'] )
+             || ( username.touched && username?.errors?.['usernameValidator'] ))
+              ? 'error' 
+              : 'success' "
+              
+          ngModel 
+          name="username" 
+          class="form-input" 
+          type="text" 
+          placeholder="Username:" 
+          required 
+          #username="ngModel"
+          minlength="6"
+          maxlength="20"
+          appUsername="username"
+          >
+    
+          @if (username.touched) {
+            <div class="errors">
+              @if (username?.errors?.['required']) {
+                <p class="input-error">Username is required!</p>
+              }
+              @if (username?.errors?.['minlength']) {
+                <p class="input-error">Username must be at least 6 characters long!</p>
+              }
+              @if (username?.errors?.['maxlength']) {
+                <p class="input-error">Username must shorter than 20 characters!</p>
+              }
+              @if (username?.errors?.['usernameValidator']) {
+                <p class="input-error">Username isn't valid! Valid characters are alphanumeric values as well as ( . _ )</p>
+              }
+            </div>
+          }
+    
+      </div>
+    
+        <div class="form-group">
+          <input 
+            [class]="
+            ( ( password.touched && password?.errors?.['required'] )
+            || ( password.touched && password?.errors?.['minlength'] )
+            || ( password.touched && password?.errors?.['maxlength'] )
+            || ( password.touched && password?.errors?.['passwordValidator'] ))
+             ? 'error' 
+             : 'success' "
+            ngModel 
+            name="password" 
+            class="form-input" 
+            [type]="passwordVisible ? 'text' : 'password' " 
+            placeholder="Password:" 
+            required 
+            #password="ngModel"
+            minlength="8"
+            maxlength="64"
+            appPassword="password"
+            (copy)="blockEvent($event)"
+            (ngModelChange)="onPasswordChange(repass)"
+            >
+            
+            <i [class]="passwordVisible ? 'fa-solid fa-eye password-icon' : 'fa-solid fa-eye-slash password-icon' " (click)="togglePasswordVisibility()"></i> 
+            
+            @if (password.touched) {
+              <div class="errors">
+                @if (password?.errors?.['required']) {
+                  <p class="input-error">Password is required!</p>
+                }
+                @if (password?.errors?.['minlength']) {
+                  <p class="input-error">Password must be at least 8 characters long!</p>
+                }
+                @if (password?.errors?.['maxlength']) {
+                  <p class="input-error">Password must shorter than 64 characters!</p>
+                }
+                @if (password?.errors?.['passwordValidator']) {
+                  <p class="input-error">Password isn't valid! Valid characters are alphanumeric values as well as ( &#64; ! _ )</p>
+                }
+              </div>
+            }
+        </div>
+    
+      <div class="form-group">
+        <input 
+          [class]="
+          ( ( repass.touched && repass?.errors?.['required'] )
+          || ( repass.touched && repass?.errors?.['repasswordValidator'] ))
+           ? 'error' 
+           : 'success' "
+          ngModel 
+          name="repass" 
+          class="form-input" 
+          [type]="rePasswordVisible ? 'text' : 'password' "
+          placeholder="Confirm password:" 
+          required 
+          #repass="ngModel"
+          appRepassword="repass"
+          >
           
-      ngModel 
-      name="username" 
-      class="form-input" 
-      type="text" 
-      placeholder="Username:" 
-      required 
-      #username="ngModel"
-      minlength="6"
-      maxlength="20"
-      appUsername="username"
-      >
-
-      @if (username.touched) {
-        <div class="errors">
-          @if (username?.errors?.['required']) {
-            <p class="input-error">Username is required!</p>
+          <i [class]="rePasswordVisible ? 'fa-solid fa-eye password-icon' : 'fa-solid fa-eye-slash password-icon' " (click)="toggleRepasswordVisibility()"></i> 
+          
+          @if (repass.touched) {
+            <div class="errors">
+              @if (repass?.errors?.['required']) {
+                <p class="input-error">You need to confirm your password!</p>
+              }
+              @if (repass?.errors?.['repasswordValidator']) {
+                <p class="input-error">Passwords don't match!</p>
+              }
+            </div>
           }
-          @if (username?.errors?.['minlength']) {
-            <p class="input-error">Username must be at least 6 characters long!</p>
-          }
-          @if (username?.errors?.['maxlength']) {
-            <p class="input-error">Username must shorter than 20 characters!</p>
-          }
-          @if (username?.errors?.['usernameValidator']) {
-            <p class="input-error">Username isn't valid! Valid characters are alphanumeric values as well as ( . _ )</p>
-          }
-        </div>
-      }
-
+      </div>
+    
+      <button 
+        class="register-button" 
+        [disabled]="!form.valid">
+        Register
+      </button>
+    
+      <p>Already have an account? <b class="form-link" routerLink="/login">Login</b></p>
+    </form>
   </div>
-
-    <div class="form-group">
-      <input 
-        [class]="
-        ( ( password.touched && password?.errors?.['required'] )
-        || ( password.touched && password?.errors?.['minlength'] )
-        || ( password.touched && password?.errors?.['maxlength'] )
-        || ( password.touched && password?.errors?.['passwordValidator'] ))
-         ? 'error' 
-         : 'success' "
-        ngModel 
-        name="password" 
-        class="form-input" 
-        [type]="passwordVisible ? 'text' : 'password' " 
-        placeholder="Password:" 
-        required 
-        #password="ngModel"
-        minlength="8"
-        maxlength="64"
-        appPassword="password"
-        (copy)="blockEvent($event)"
-        (ngModelChange)="onPasswordChange(repass)"
-        >
-        
-        <i [class]="passwordVisible ? 'fa-solid fa-eye password-icon' : 'fa-solid fa-eye-slash password-icon' " (click)="togglePasswordVisibility()"></i> 
-        
-        @if (password.touched) {
-          <div class="errors">
-            @if (password?.errors?.['required']) {
-              <p class="input-error">Password is required!</p>
-            }
-            @if (password?.errors?.['minlength']) {
-              <p class="input-error">Password must be at least 8 characters long!</p>
-            }
-            @if (password?.errors?.['maxlength']) {
-              <p class="input-error">Password must shorter than 64 characters!</p>
-            }
-            @if (password?.errors?.['passwordValidator']) {
-              <p class="input-error">Password isn't valid! Valid characters are alphanumeric values as well as ( &#64; ! _ )</p>
-            }
-          </div>
-        }
-    </div>
-
-  <div class="form-group">
-    <input 
-      [class]="
-      ( ( repass.touched && repass?.errors?.['required'] )
-      || ( repass.touched && repass?.errors?.['repasswordValidator'] ))
-       ? 'error' 
-       : 'success' "
-      ngModel 
-      name="repass" 
-      class="form-input" 
-      [type]="rePasswordVisible ? 'text' : 'password' "
-      placeholder="Confirm password:" 
-      required 
-      #repass="ngModel"
-      appRepassword="repass"
-      >
-      
-      <i [class]="rePasswordVisible ? 'fa-solid fa-eye password-icon' : 'fa-solid fa-eye-slash password-icon' " (click)="toggleRepasswordVisibility()"></i> 
-      
-      @if (repass.touched) {
-        <div class="errors">
-          @if (repass?.errors?.['required']) {
-            <p class="input-error">You need to confirm your password!</p>
-          }
-          @if (repass?.errors?.['repasswordValidator']) {
-            <p class="input-error">Passwords don't match!</p>
-          }
-        </div>
-      }
-  </div>
-
-  <button 
-    class="register-button" 
-    [disabled]="!form.valid">
-    Register
-  </button>
-
-  <p>Already have an account? <b class="form-link" routerLink="/login">Login</b></p>
-</form>
+</div>

@@ -1,15 +1,22 @@
+body {
+  background-color: #f7f7f7;
+}
+
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 15px;
-  min-height: 80vh;
+}
+
+.header {
+  color: #353535;
 }
 
 .form-input {
   border-radius: 8px;
-  border: 2px solid black;
+  border: 2px solid #353535;
   text-indent: 10px;
   padding: 5px;
   width: 250px;
@@ -24,13 +31,24 @@ form {
 }
 
 .login-button {
-  padding: 10px;
-  border-radius: 12px;
-  border: 2px solid black;
-  width: 120px;
-  /* font-size: 16px; */
-  font-weight: 700;
+  background-color: #3c6e71;
+  color: white;
+
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
   text-transform: uppercase;
+
+  border: 2px solid #353535;
+  border-radius: 6px;
+
+  padding: 6px;
+  min-height: 15px;
+  min-width: 125px;
+}
+
+.login-button:hover {
+  cursor: pointer;
 }
 
 .form-link:hover {
@@ -55,7 +73,7 @@ form {
 }
 
 .success {
-  border: 2px solid greenyellow;
+  border: 2px solid #8ac926;
 }
 
 .password-icon {
@@ -68,4 +86,40 @@ form {
 
 .password-icon:hover {
   cursor: pointer;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.glass-wrapper {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(9px); 
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  border-radius: 15px;
+  min-height: 375px;
+}
+
+.form-link {
+  color: #3c6e71;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.form-link:hover {
+  color: #2f4f51;
 }
