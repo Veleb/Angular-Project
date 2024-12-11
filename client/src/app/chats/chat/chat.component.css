@@ -4,7 +4,7 @@
 
 .sidebar {
   width: 25%;
-  min-height: 100vh;
+  min-height: 75vh;
   background-color: #f4f4f4;
   border-right: 1px solid #ddd;
   overflow-y: auto;
@@ -25,22 +25,25 @@
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
-  max-height: 100vh;
-  min-height: 100vh;
+  max-height: 75vh;
+  min-height: 75vh;
 }
 
 .message {
   position: relative;
-  max-width: 70%;
   padding: 10px;
   border-radius: 8px;
   margin: 5px 0;
+  max-width: 50%;
+  min-width: 200px;
+  word-wrap: break-word; 
+  word-break: break-word; 
 }
 
 .owner-buttons {
   display: none;
   position: absolute;
-  top: -35px;  
+  top: -20px;  
   right: 0;
   background-color: #333;
   color: white;
@@ -48,9 +51,10 @@
   padding: 5px;
   display: flex;
   gap: 5px;
+  z-index: 2;
 }
 
-.delete-button, .edit-button, .confirm-button {
+.delete-button, .edit-button, .confirm-button, .cancel-button {
   padding: 5px 10px;
   border-radius: 3px;
   color: white;
@@ -73,11 +77,15 @@
   background-color: #28a745;
 }
 
+.cancel-button {
+  background-color: #6c757d;
+}
+
 .edit-input {
   padding: 5px;
   border-radius: 8px;
   border: 1px solid white;
-  width: 100px;
+  width: 80px;
 }
 
 .message.sent {
@@ -131,4 +139,19 @@
 
 .chat-item:hover {
   background-color: #f0f0f0;
+}
+
+.header {
+  text-align: center;
+}
+
+.room-name {
+  color: #007bff;
+}
+
+edit-message-input {
+  width: 40px;
+  padding: 3px;
+  border-radius: 6px;
+  margin-right: 3px;
 }

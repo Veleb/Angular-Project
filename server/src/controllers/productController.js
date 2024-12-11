@@ -28,8 +28,8 @@ productController.get("/", async (req, res) => {
     const response = await productService.getAll(limit);
     res.json(response);
 
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -44,8 +44,8 @@ productController.get("/:productId", async (req, res) => {
     }
 
     res.json(response);
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -61,8 +61,8 @@ productController.post("/", async (req, res) => {
   try {
     const response = await productService.create(productData, userId);
     res.status(201).json(response);
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -78,8 +78,8 @@ productController.delete("/:productId", async (req, res) => {
     }
 
     res.json({ message: "Product deleted successfully" });
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -95,8 +95,8 @@ productController.put("/:productId", async (req, res) => {
     }
 
     res.json(response);
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -113,8 +113,8 @@ productController.post("/save/:productId", async (req, res) => {
     const response = await productService.saveProduct(productId, userId);
     res.json(response);
 
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -134,9 +134,23 @@ productController.delete("/save/:productId", async (req, res) => {
     }
 
     res.json(response);
-  } catch ({ message }) {
-    res.status(400).json({ message });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
+
+productController.delete('/delete/user', async (req, res) => {
+  const userId = req.user?._id;
+  
+  try {
+    
+    const response = await productService.deleteUserProducts(userId);
+    
+    res.status(200).json(response);
+
+  } catch (err) {
+    res.status(400).json(err);
+  }
+})
 
 export default productController;

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import roomService from "../services/roomService.js";
 import userService from "../services/userService.js";
+import messageService from '../services/messageService.js';
 
 const roomController = Router();
 
@@ -36,7 +37,7 @@ roomController.post('/', async (req, res) => {
           await Promise.all(addRoomPromises);
 
       } else {
-         room = await roomService.getRoomByUsers(data.users);
+         room = await roomService.getRoomByUsers(data.users, data.product);
       }
       
       res.status(200).json(room);
@@ -92,6 +93,34 @@ roomController.get('/:roomId/messages', async (req, res) => {
     res.status(400).json({ message: `Error getting rooms: ${err}` });
   }
 });
+
+roomController.delete('/delete/user', async (req, res) => {
+  const userId = req.user?._id;
+  
+  try {
+    
+    const response = await roomService.removeUserFromRooms(userId);
+
+    res.status(200).json(response);
+
+  } catch (err) {
+    res.status(400).json({ message: `Error deleting user's rooms: ${err}` });
+  }
+})
+
+roomController.delete('/delete/user/messages', async (req, res) => {
+  const userId = req.user?._id;
+  
+  try {
+    
+    const response = await messageService.removeUserMessages(userId);
+
+    res.status(200).json(response);
+
+  } catch (err) {
+    res.status(400).json({ message: `Error deleting user's messages: ${err}` });
+  }
+})
 
 
 

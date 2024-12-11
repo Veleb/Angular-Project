@@ -1,0 +1,21 @@
+
+  <div class="dialog-overlay">
+    <div class="dialog-container">
+      <h2 class="dialog-title">Confirmation needed:</h2>
+      <div class="dialog-content">
+        <p>Are you sure you want to delete your profile?</p>
+      </div>
+      <div class="dialog-actions">
+        <button 
+          class="btn btn-cancel" 
+          (click)="onCancel()">
+          Cancel
+        </button>
+        <button 
+          class="btn btn-delete" 
+          (click)="onConfirm()">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>

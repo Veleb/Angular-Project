@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserService } from '../../user/user.service';
@@ -18,6 +18,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit, OnDestroy {
+
+  @ViewChild('editMessageInput') editMessageInput!: ElementRef<HTMLInputElement>;
+
   private subscriptions = new Subscription();
 
   private message$$: ReplaySubject<Message> = new ReplaySubject();
@@ -34,6 +37,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   isLoadingMessages: boolean = false;
   isEditing: boolean = false;
+
+  editingMessageId: string | null = null;
+  isEditingMessage: boolean = false;
 
   private messagesLimit: number = 50;
   private messagesSkip: number = 0;
@@ -71,13 +77,35 @@ export class ChatComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.message$.subscribe({
-        next: (data) => {
-          this.processIncomingMessage(data);
+      this.socketService.listen('message deleted').subscribe({
+        next: (messageId: string) => {
+
+          this.messages = this.messages.filter(msg => msg._id !== messageId);
+
         },
-        error: (err) => console.error('Error occurred while processing message:', err)
+        error: (err) => {
+          console.error('Error while listening for deleted message:', err);
+        }
       })
     );
+
+    this.subscriptions.add(
+      this.socketService.listen('message edited').subscribe({
+        next: (editedMessage: Message) => {
+          const index = this.messages.findIndex(msg => msg._id === editedMessage._id);
+          if (index !== -1) {
+            this.messages[index] = { ...this.messages[index], ...editedMessage };
+          }
+
+          this.toastr.success(`Successfully edited the message!`, `Success`);
+
+        },
+        error: (err) => {
+          console.error('Error while listening for edited message:', err);
+        }
+      })
+    );
+    
   }
 
   private resetAndLoadRoom(): void {
@@ -181,21 +209,28 @@ export class ChatComponent implements OnInit, OnDestroy {
       console.error('No room data available');
       return;
     }
-
+  
     this.roomService.getRoom(roomId).subscribe({
       next: (data: Room) => {
         const updatedRoom = { ...data, name: chatName };
-
+  
         this.roomService.editRoom(updatedRoom, roomId).subscribe({
           next: () => {
-            this.isEditing = !this.isEditing;
-            this.room!.name = chatName;
-            this.toastr.success('Successfully updated the room name!', `Error Occurred`);
+            this.userService.getProfile().subscribe({
+              next: () => {
+                this.isEditing = false;
+                this.toastr.success('Successfully updated the room name!', 'Room Updated');
+              },
+              error: (err) => {
+                console.error('Error refreshing user profile:', err);
+                this.toastr.error('Failed to update rooms list', 'Error');
+              }
+            });
           },
           error: (err) => {
-            this.isEditing = !this.isEditing;
+            this.isEditing = false;
             console.error('Error updating room name:', err);
-            this.toastr.error('Failed to update the room name!', `Error Occurred`);
+            this.toastr.error('Failed to update the room name!', 'Error');
           }
         });
       },
@@ -207,13 +242,49 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     const message = messageInput.value;
 
+    if (message.trim() === '') {
+      this.toastr.warning('Message cannot be empty!', 'Warning');
+      return;
+    }
+
     messageInput.value = '';
 
     if (this.user) {
       this.socketService.emit('send message', { roomId: this.roomId, message, senderId: this.user._id });
     } else {
-      console.error('User not authenticated');
+      this.toastr.error('User not authenticated!', `Error Occurred`);
     }
+  }
+
+  deleteMessage(messageId: string) {
+    if (messageId) {
+      this.socketService.emit('delete message', { messageId, roomId: this.roomId });
+    } else {
+      this.toastr.error("An error occurred while deleting message!", `Error Occurred`);
+    }
+  }
+
+  editMessage(messageId: string) {
+    this.editingMessageId = messageId;
+    this.isEditingMessage = true;
+  }
+
+  confirmEditMessage(messageId: string) {
+    const newText = this.editMessageInput.nativeElement.value;
+
+    if (newText.trim() === '') {
+      this.toastr.warning(`Message can't be empty!`, `Error Occurred`);
+      return;
+    }
+
+    this.socketService.emit('edit message', { roomId: this.roomId, messageId, newMessage: newText  });
+
+    this.cancelEditMessage();
+  }
+
+  cancelEditMessage() {
+    this.editingMessageId = null;
+    this.isEditingMessage = false;
   }
 
   ngOnDestroy(): void {

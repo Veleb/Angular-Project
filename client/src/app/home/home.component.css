@@ -90,7 +90,9 @@ hr {
 .products-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px
+  justify-content: center; 
+  padding: 20px; 
+  gap: 15px;
 }
 
 .overview-wrapper {
@@ -168,7 +170,7 @@ hr {
 }
 
 .chat-icon {
-  background-color: #284b63;
+  background-color: #007bff;
 }
 
 .user-icon {

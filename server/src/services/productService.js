@@ -7,7 +7,10 @@ const getAll = async (limit) => {
 };
 
 const getOne = async (productId) => {
-  return await Product.findById(productId);
+  
+  const product = await Product.findById(productId).lean();
+
+  return product;
 };
 
 const create = async (productData, userId) => {
@@ -82,13 +85,18 @@ const getSavedProducts = async (userId) => {
     const sortedProducts = (user.savedProducts || []).sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
-
+    
     return sortedProducts;
   } catch (err) {
     console.error("Error fetching saved products:", err);
     throw err;
   }
 };
+
+async function deleteUserProducts(userId) {
+  return Product.deleteMany({ _ownerId: userId });
+}
+
 
 const productService = {
   getAll,
@@ -99,7 +107,8 @@ const productService = {
   saveProduct,
   unsaveProduct,
   getSavedProducts,
-
+  deleteUserProducts,
+  
 };
 
 export default productService;

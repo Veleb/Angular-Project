@@ -107,6 +107,24 @@ async function getUserRooms(userId) {
     return user.rooms;
 }  
 
+async function deleteUser(userId) {
+    const user = await User.findByIdAndDelete(userId);
+
+    return user;
+}
+
+async function updateUser(userId, newUsername) {
+    const user = await User.findByIdAndUpdate(userId,
+        { $set: { username: newUsername } },
+        { new: true }
+    )
+    .populate('userProducts')
+    .populate('rooms')
+    .lean();
+
+    return user;
+}
+
 const userService = { // ✔️
     register,
     login,
@@ -115,7 +133,9 @@ const userService = { // ✔️
     addRoomToUser,
     removeRoomFromUser,
     getUserRooms,
-    
+    deleteUser,
+    updateUser,
+
 }
 
 export default userService;

@@ -1,6 +1,6 @@
 <section class="chat-wrapper">
   <div class="sidebar">
-    <h3>Chats</h3>
+    <h3 class="header">Chats</h3>
     @if (user?.rooms?.length === 0) {
       <h1>No chats available!</h1>
     } @else {
@@ -30,9 +30,8 @@
   </div>
   
   <div class="chat-container">
-    <h1>Welcome, to {{ room?.name }}</h1>
+    <h1 class="header">Welcome, to <span class="room-name">{{ room?.name }}</span></h1>
     <div class="message-wrapper" #messageWrapper >
-      <!-- (scroll)="onScroll($event)" -->
       @if ( isLoadingMessages ) {
         <app-loader/>
       } @else {
@@ -44,13 +43,27 @@
           (mouseleave)="handleHover(message._id, false)"
           >
   
-            <p>{{ message.sender?.username || "Anonymous" }}: {{ message.text }}</p>
-            <small>{{ message.created_at | time }}</small>
+            @if (isEditingMessage && editingMessageId === message._id) {
+              <input class="edit-message-input" #editMessageInput type="text" [value]="message.text" placeholder="Edit your message:">
+              <small>{{ message.created_at | time }}</small>
+
+            } @else {
+
+              <p>{{ message.sender?.username || "Anonymous" }}: {{ message.text }}</p>
+              <small>{{ message.created_at | time }}</small>
+              
+            }
   
             @if (user?._id === message.sentBy && hoveringId === message._id) {
               <div class="owner-buttons">
-                <button class="edit-button">Edit</button>
-                <button class="delete-button">Delete</button>
+                @if (!isEditingMessage) {
+                  <button class="edit-button" (click)="editMessage(message._id)">Edit</button>
+                  <button class="delete-button" (click)="deleteMessage(message._id)">Delete</button>
+                } @else {
+                  <button class="confirm-button" (click)="confirmEditMessage(message._id)">Confirm</button>
+                  <button class="cancel-button" (click)="cancelEditMessage()">Cancel</button>
+                  <button class="delete-button" (click)="deleteMessage(message._id)">Delete</button>
+                }
               </div>
             }
   

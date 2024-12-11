@@ -20,8 +20,9 @@
       </div>
     
       <div class="product-data">
-        <h2>{{ product.name }}</h2>
+        <h2>{{ product.name | slice: 13 }}</h2>
         <h3 class="product-price">${{ product.price }}</h3>
+        <h3 class="product-category">Category: {{  product.category }} </h3>
       </div>
 
     </div>

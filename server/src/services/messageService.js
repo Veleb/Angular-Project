@@ -1,4 +1,5 @@
 import Message from "../models/Message.js";
+import mongoose from "mongoose";
 
 async function createMessage(data, senderId) {
   try {
@@ -22,15 +23,21 @@ async function editMessage(messageId, newData) {
 }
 
 async function deleteMessage(messageId) {
+
   const updatedMessage = await Message.findByIdAndDelete(messageId);
 
   return updatedMessage;
+}
+
+async function removeUserMessages(userId) {
+  return Message.deleteMany({ sentBy: userId });
 }
 
 const messageService = {
   createMessage,
   editMessage,
   deleteMessage,
+  removeUserMessages
 };
 
 export default messageService;

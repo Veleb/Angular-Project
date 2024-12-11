@@ -1,31 +1,67 @@
-@if (isOwnProfile && user) {
-  <div>
-    <p>Welcome back, {{ user.username }}</p>
+<section class="profile-wrapper">
+  @if (isOwnProfile && user) {
+    
+    @if (isEditing) {
+      <h1 class="welcome-message">Welcome back, <input #usernameInput placeholder="Enter new username:" class="username-input" type="text" [value]="user.username">!</h1>
+    } @else {
+      <h1 class="welcome-message">Welcome back, <span class="username">{{ user.username }}</span>!</h1>
+    }
 
-    <div class="chat-wrapper">
-        <h2 class="header">{{ user.username }}'s chats</h2>
-      @if (user.rooms?.length === 0) {
-
-        <h1>No chats found!</h1>
-
+    <div class="featured-products">
+      <h2 class="section-header">Your Products</h2>
+      @if (user.userProducts!.length === 0) {
+        <p class="empty-message">You have no products yet. <span class="router-link" routerLink="/product/create">Add some to get started!</span></p>
       } @else {
+        <div class="product-list">
+          @for (product of user.userProducts; track $index) {
+            <app-product-card [product]="product"></app-product-card>
+          }
+        </div>
+      }
+    </div>
 
+    <div class="room-wrapper">
+      <h2 class="section-header">Your Chats</h2>
+      @if (user.rooms?.length === 0) {
+        <p class="empty-message">No active chats yet. Start chatting now!</p>
+      } @else {
+        <div class="room-list">
           @for (room of user.rooms; track $index) {
-            <div class="chat-item">
-              <h2 [routerLink]=" '/chat/' + room.product + '/' + room._id ">{{room.name}}</h2>
+            <div class="room-item">
+              <h3 [routerLink]="'/chat/' + room.product + '/' + room._id">{{ room.name }}</h3>
               <button (click)="leaveRoom(room._id)" class="leave-button">Leave</button>
             </div>
           }
+        </div>
       }
+    </div>
 
+    <div class="button-wrapper">
+      <button class="button logout-button" (click)="onLogout()">Logout</button>
+      <button class="button delete-button" (click)="deleteProfile()">Delete Profile</button>
+      
+      @if (isEditing) {
+        <button class="button confirm-button" (click)="confirmEdit()">Confirm Edit</button>
+        <button class="button cancel-button" (click)="toggleEditProfile()">Cancel</button>
+      } @else {
+        <button class="button edit-button" (click)="toggleEditProfile()">Edit Profile</button>
+      }
+    </div>
+  } @else {
+    <h1 class="welcome-message">Check out <span class="username">{{ user?.username }}</span>'s profile!</h1>
+
+    <div class="featured-products">
+      <h2 class="section-header">{{ user?.username }}'s Products</h2>
+      @if (user?.userProducts?.length === 0) {
+        <p class="empty-message">{{ user?.username }} hasn't added any products yet.</p>
+      } @else {
+        <div class="product-list">
+          @for (product of user?.userProducts; track $index) {
+            <app-product-card [product]="product"></app-product-card>
+          }
+        </div>
+      }
     </div>
     
-
-    <button (click)="onLogout()" class="logout-button">Logout</button>
-  </div>
-} @else {
-  <div>
-    <p>You are viewing {{ user?.username }}'s profile.</p>
-  </div>
-}
-
+  }
+</section>

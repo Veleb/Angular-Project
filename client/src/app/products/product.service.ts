@@ -42,4 +42,8 @@ export class ProductService {
     return this.http.get<Product[]>(`/api/products/saved`);
   }
 
+  deleteUserProducts() {
+    return this.http.delete(`/api/products/delete/user`);
+  }
+
 }

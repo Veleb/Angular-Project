@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { ProductService } from '../product.service';
 import { Category, ProductDataInterface } from '../../types';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create',
   standalone: true,
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class CreateComponent {
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router, private toastr: ToastrService) {}
 
   categories = environment.categories;
   
@@ -63,12 +64,13 @@ export class CreateComponent {
       
       this.productService.createProduct(productData).subscribe({
         next: (response) => {
+          this.toastr.success(`Successfully created product!`, `Success`);
           this.router.navigate(['/catalog']);
-          console.log('Product created successfully:', response); // TODO ADD A ZUCCEZZFUL TOAZT
         },
         error: (err) => {
-          this.router.navigate(['/product/create']); // change thiz with the form information
-          console.error('Error creating product:', err); // TODO ADD AN ERROR TOEAZT 
+          this.toastr.error(`Error creating product!`, `Error Occurred`);
+          console.error('Error creating product:', err); 
+          this.router.navigate(['/product/create']);
         }})
     } else {
       console.error('Form is not valid');

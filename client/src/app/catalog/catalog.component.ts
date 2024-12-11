@@ -5,6 +5,7 @@ import { ProductCardComponent } from '../products/product-card/product-card.comp
 import { environment } from '../../environments/environment';
 import { UserService } from '../user/user.service';
 import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-catalog',
@@ -14,6 +15,7 @@ import { forkJoin } from 'rxjs';
   styleUrl: './catalog.component.css'
 })
 export class CatalogComponent implements OnInit {
+
   products: Product[] = [];
   selectedCategories: string[] = [];
   filteredProducts: Product[] = [];
@@ -21,7 +23,7 @@ export class CatalogComponent implements OnInit {
   user: AuthUser | null = null;
   showSavedOnly: boolean = false;
 
-  constructor(private productService: ProductService, private userService: UserService) {}
+  constructor(private productService: ProductService, private userService: UserService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     forkJoin({
@@ -51,12 +53,13 @@ export class CatalogComponent implements OnInit {
         (category) => category !== target.id
       );
     }
-
+    
     this.applyFilters();
   }
 
   onToggleSavedProducts(event: Event): void {
     const target = event.target as HTMLInputElement;
+
     this.showSavedOnly = target.checked;
 
     this.applyFilters();
@@ -64,31 +67,38 @@ export class CatalogComponent implements OnInit {
 
   applyFilters(): void {
     if (this.showSavedOnly) {
-      this.showSavedProducts();
+      this.productService.getUserSavedProducts().subscribe({
+        next: (savedProducts: Product[]) => {
+          this.filteredProducts = this.selectedCategories.length > 0
+            ? savedProducts.filter((product) =>
+                this.selectedCategories.includes(product.category || '')
+              )
+            : savedProducts;
+        },
+        error: (err) => console.error('Error fetching saved products:', err),
+      });
     } else {
-      if (this.selectedCategories.length !== 0) {
-        this.filteredProducts = this.products.filter((product: Product) =>
-          this.selectedCategories.includes(product.category || '')
-        );
-      } else {
-        this.filteredProducts = [...this.products];
-      }
+      this.filteredProducts = this.selectedCategories.length > 0
+        ? this.products.filter((product) =>
+            this.selectedCategories.includes(product.category || '')
+          )
+        : [...this.products];
     }
   }
 
   showSavedProducts(): void {
     this.productService.getUserSavedProducts().subscribe({
       next: (data: Product[]) => {
-        this.filteredProducts = [];
-
-        if (data.length > 0) {
-          this.filteredProducts = data;
+        this.filteredProducts = data.length > 0 ? data : [];
+        if (data.length === 0) {
+          this.toastr.info('No saved products found!', 'Info');
         }
-        
       },
       error: (err) => {
         console.error('Error fetching saved products:', err);
+        this.toastr.error('Failed to load saved products.', 'Error');
       },
     });
   }
+
 }

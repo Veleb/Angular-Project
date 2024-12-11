@@ -17,9 +17,11 @@ export class ErrorMsgComponent implements OnInit {
     this.errorMsgService.errorMsg$.subscribe((error: any) => {
       this.errorMsg = error?.message;
 
-      setTimeout(() => {
-        this.errorMsg = '';
-      }, 3000);
-    })
+      if (this.errorMsg) {
+        setTimeout(() => {
+          this.errorMsg = '';  
+        }, 3000);
+      }
+    });
   }
 }

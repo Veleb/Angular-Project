@@ -90,13 +90,14 @@ async function checkRoomExists(users, productId) {
   }
 }
 
-async function getRoomByUsers(users) {
+async function getRoomByUsers(users, productId) {
   try {
 
     const userObjectIds = users.map(userId => new mongoose.Types.ObjectId(userId));
     
     const room = await Room.findOne({
-      users: { $all: userObjectIds }
+      users: { $all: userObjectIds },
+      product: new mongoose.Types.ObjectId(productId)
     });
     
     return room;
@@ -106,6 +107,11 @@ async function getRoomByUsers(users) {
   }
 }
 
+async function removeUserFromRooms(userId) {
+  return Room.deleteMany({ users: userId });
+}
+
+
 const roomService = {
   addMessageToRoom,
   createRoom,
@@ -114,7 +120,8 @@ const roomService = {
   getRoomByUsers,
   getRoom,
   getRoomMessages,
-
+  removeUserFromRooms,
+  
 };
 
 export default roomService;

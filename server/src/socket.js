@@ -11,6 +11,7 @@ export default function handleSocket(io) {
       socket.disconnect(true);  
       return;
     }
+    
     socket.on("join room", async (data) => {
       const { roomId, userId } = data;
 
@@ -42,16 +43,23 @@ export default function handleSocket(io) {
       io.to(roomId).emit(`message sent`, sentMessage);
     });
 
-    socket.on('edit message', async (roomId, messageId, data) => {
-      const updatedMessage = await messageService.editMessage(messageId, data);
-
-      io.to(roomId).emit(`message edited`, updatedMessage);
+    socket.on('edit message', async (data) => {
+      const { roomId, messageId, newMessage } = data;
+     
+      try {
+        const updatedMessage = await messageService.editMessage(messageId, newMessage);
+     
+        io.to(roomId).emit('message edited', updatedMessage);
+      } catch (error) {
+        console.error('Error editing message:', error);
+      }
     });
 
-    socket.on('delete message', async (roomId, messageId) => {
+    socket.on('delete message', async ({roomId, messageId}) => {
+      
       await messageService.deleteMessage(messageId);
 
-      io.to(roomId).emit('message deleted');
+      io.to(roomId).emit('message deleted', messageId);
     });
 
   });

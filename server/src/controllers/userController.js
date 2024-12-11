@@ -62,6 +62,21 @@ userController.get('/profile', async (req, res) => {
     }
 });
 
+userController.put('/profile', async (req, res) => {
+    const userId = req.user?._id;
+
+    try {
+        const { newUsername } = req.body;
+
+        const user = await userService.updateUser(userId, newUsername);
+
+        res.status(200).json(user);
+        
+    } catch (err) {
+        res.status(400).json({ message: 'Error Occurred while editing profile!' });
+    }
+});
+
 userController.get('/profiles', async (req, res) => { // ✔️
     try {
         const response = await userService.getUsers();
@@ -90,6 +105,22 @@ userController.get('/profile/:profileId', async (req, res) => { // ✔️
 
 })
 
+
+userController.delete('/delete/profile', async (req, res) => {
+
+    const userId = req.user._id;
+  
+    try {
+  
+      const response = await userService.deleteUser(userId)
+      
+      res.status(200).json(response);
+  
+    } catch (err) {
+      res.status(400).json({ message: `Error deleting account: ${err}` });
+    }
+});
+
 userController.delete('/:roomId', async (req, res) => {
 
     const roomId = req.params.roomId;
@@ -104,7 +135,7 @@ userController.delete('/:roomId', async (req, res) => {
     } catch (err) {
       res.status(400).json({ message: `Error deleting rooms: ${err}` });
     }
-  });
+});
 
 export default userController;
 

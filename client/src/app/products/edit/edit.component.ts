@@ -5,6 +5,7 @@ import { ProductService } from '../product.service';
 import { Category, Product, ProductDataInterface } from '../../types';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-edit',
   standalone: true,
@@ -14,7 +15,7 @@ import { switchMap } from 'rxjs';
 })
 export class EditComponent implements OnInit {
 
-  constructor(private productService: ProductService, private router: Router, private activateRoute: ActivatedRoute) {}
+  constructor(private productService: ProductService, private router: Router, private activateRoute: ActivatedRoute, private toastr: ToastrService) {}
 
   product: Product | null = null;
 
@@ -100,9 +101,11 @@ export class EditComponent implements OnInit {
      
       this.productService.updateProduct(productData, this.product?._id || '').subscribe({
         next: (response) => {
+          this.toastr.success(`Successful edit!`, `Success`);
           this.router.navigate([`/product/${this.product?._id}`]);
         },
         error: (err) => {
+          this.toastr.error(`Something went wrong!`, `Error Occurred`);
           console.error('Error updating product:', err);
         }
       });

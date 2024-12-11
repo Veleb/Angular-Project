@@ -5,6 +5,7 @@ import { AuthUser, Product, Room } from '../../types';
 import { UserService } from '../../user/user.service';
 import { RoomService } from '../../chats/room.service';
 import { ProductCardComponent } from '../product-card/product-card.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
@@ -27,6 +28,7 @@ export class DetailsComponent implements OnInit {
     private roomService: RoomService,
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -65,8 +67,14 @@ export class DetailsComponent implements OnInit {
 
   deleteProduct(productId: string | undefined): void {
     this.productService.deleteProductById(productId).subscribe({
-      next: () =>  this.router.navigate(['/catalog']),
-      error: (err) => console.error(`Error deleting product by id: ${err}`)
+      next: () =>  {
+        this.toastr.success(`Successfully deleted product!`, `Success`);
+        this.router.navigate(['/catalog']);
+      },
+      error: (err) => {
+        this.toastr.error(`Something went wrong!`, `Error Occurred`);
+        console.error(`Error deleting product by id: ${err}`);
+      }
     });
   }
   
@@ -101,4 +109,5 @@ export class DetailsComponent implements OnInit {
       }
     });
   }
+  
 }

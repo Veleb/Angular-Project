@@ -26,4 +26,11 @@ export class RoomService {
     return this.http.get<Message[]>(`/api/rooms/${roomId}/messages/?limit=${limit}&skip=${skip}`);
   }
 
+  deleteUserRooms() {
+    return this.http.delete(`/api/rooms/delete/user`);
+  }
+
+  deleteUserMessages() {
+    return this.http.delete(`/api/rooms/delete/user/messages`);
+  }
 }

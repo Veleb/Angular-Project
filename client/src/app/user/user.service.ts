@@ -92,6 +92,14 @@ export class UserService implements OnDestroy {
     return this.http.delete(`/api/users/${roomId}`);
   }
 
+  deleteProfile() {
+    return this.http.delete(`/api/users/delete/profile`);
+  }
+
+  updateProfile(newUsername: string): Observable<AuthUser> {
+    return this.http.put<AuthUser>(`/api/users/profile/`, { newUsername } );
+  }
+
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
   }
